@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/drawable-anydpi/fecha_nota_detalle.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/drawable/cuadro_dialogo_establecer_telefono.xml" value="0.16" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_actualizar_contacto.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_actualizar_nota.xml" value="0.22" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_actualizar_pass_usuario.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_agregar_contacto.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_agregar_nota.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_configuracion.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_detalle_contacto.xml" value="0.22" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_detalle_nota.xml" value="0.22" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_editar_imagen_perfil.xml" value="0.22" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_listar_contactos.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_login.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_menu_principal.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_notas_archivadas.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_pantalla_de_carga.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/activity_perfil_usuario.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_autenticacion.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_elegir_imagen.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_eliminar_nota_importante.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_establecer_telefono.xml" value="0.22" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_filtrar.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_filtrar_notas.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_informacion.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_opciones_contacto.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/cuadro_dialogo_validar_registro_c.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/dialogo_cuenta_verificada.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/dialogo_opciones.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/item_contacto.xml" value="0.25" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/item_nota.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/layout/item_nota_importante.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_actualizar_pass.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_agregar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_agregar_contacto.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_filtrar.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_notas.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_principal.xml" value="0.1921875" />
+        <entry key="..\:/Users/Marco/AndroidStudioProjects/AgendaOnline/app/src/main/res/menu/menu_vaciar_todas_las_notas.xml" value="0.1921875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
