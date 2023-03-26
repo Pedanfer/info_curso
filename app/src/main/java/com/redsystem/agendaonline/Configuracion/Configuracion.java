@@ -31,7 +31,7 @@ import com.redsystem.agendaonline.ToolBarActivity;
 
 public class Configuracion extends ToolBarActivity {
 
-    TextView Uid_Eliminar, EliminarCuenta;
+    TextView EliminarCuenta;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
@@ -43,15 +43,13 @@ public class Configuracion extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracion);
+        setChildContentView(R.layout.activity_configuracion);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Configuracion");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         InicializarVariables();
-        ObtenerUid();
 
         EliminarCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +59,7 @@ public class Configuracion extends ToolBarActivity {
         });
     }
 
-    private void InicializarVariables(){
-        Uid_Eliminar = findViewById(R.id.Uid_Eliminar);
+    private void InicializarVariables() {
         EliminarCuenta = findViewById(R.id.EliminarCuenta);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -71,13 +68,7 @@ public class Configuracion extends ToolBarActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Usuarios");
 
-
         dialog_autenticacion = new Dialog(Configuracion.this);
-    }
-
-    private void ObtenerUid(){
-        String uid = getIntent().getStringExtra("Uid");
-        Uid_Eliminar.setText(uid);
     }
 
     private void EliminarUsuarioAutenticacion() {
@@ -90,7 +81,7 @@ public class Configuracion extends ToolBarActivity {
                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             EliminarUsuarioBD();
                             Intent intent = new Intent(Configuracion.this, MainActivity.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -98,7 +89,7 @@ public class Configuracion extends ToolBarActivity {
                             startActivity(intent);
                             finish();
                             Toast.makeText(Configuracion.this, "Se ha eliminado su cuenta con éxito", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             Toast.makeText(Configuracion.this, "Ha ocurrido un problema", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -121,13 +112,12 @@ public class Configuracion extends ToolBarActivity {
         alertDialog.create().show();
     }
 
-    private void EliminarUsuarioBD(){
-        String uid_eliminar = Uid_Eliminar.getText().toString();
-        Query query = databaseReference.child(uid_eliminar);
+    private void EliminarUsuarioBD() {
+        Query query = databaseReference.child(getIntent().getStringExtra("Uid"));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     ds.getRef().removeValue();
                 }
                 Toast.makeText(Configuracion.this, "Se ha eliminado su cuenta", Toast.LENGTH_SHORT).show();
@@ -140,7 +130,7 @@ public class Configuracion extends ToolBarActivity {
         });
     }
 
-    private void Autenticacion(){
+    private void Autenticacion() {
         Button Btn_Entendido_Aut, Btn_Cerrar_Sesion_Aut;
 
         dialog_autenticacion.setContentView(R.layout.cuadro_dialogo_autenticacion);

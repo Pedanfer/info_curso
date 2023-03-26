@@ -74,10 +74,7 @@ public class MenuPrincipal extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_principal);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        setChildContentView(R.layout.activity_menu_principal);
 
         // Drawer code
         initializeDrawer();
@@ -167,7 +164,6 @@ public class MenuPrincipal extends ToolBarActivity {
 
     private void selectItem(int position) {
         mDrawerList.setItemChecked(position, false);
-        setTitle(mNavigationDrawerItemTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
 
         switch (position) {

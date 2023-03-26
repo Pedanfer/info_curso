@@ -8,5 +8,5 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:navigationIcon="@drawable/ccp_ic_arrow_drop_down"
+    local:navigationIcon="?attr/homeAsUpIndicator"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

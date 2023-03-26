@@ -13,17 +13,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/Uid_Eliminar"
-            android:text="@string/Uid_Eliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:padding="10dp"
-            android:fontFamily="@font/worksans"/>
-
-        <TextView
             android:id="@+id/EliminarCuenta"
             android:text="@string/EliminarCuenta"
             android:layout_width="match_parent"

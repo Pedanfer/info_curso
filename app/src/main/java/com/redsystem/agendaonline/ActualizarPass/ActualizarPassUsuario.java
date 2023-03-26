@@ -44,12 +44,11 @@ public class ActualizarPassUsuario extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actualizar_pass_usuario);
+        setChildContentView(R.layout.activity_actualizar_pass_usuario);
 
         ActionBar actionBar = getSupportActionBar();
         toolBar.setTitle("Cambiar contraseña");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         InicializarVariables();
         LecturaDeDato();

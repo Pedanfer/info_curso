@@ -44,12 +44,11 @@ public class Agregar_Nota extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_nota);
+        setChildContentView(R.layout.activity_agregar_nota);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         InicializarVariables();
         ObtenerDatos();

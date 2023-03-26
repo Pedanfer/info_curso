@@ -40,13 +40,12 @@ public class Detalle_Nota extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_nota);
+        setChildContentView(R.layout.activity_detalle_nota);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Detalle de nota");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         InicializarVistas();
         RecuperarDatos();

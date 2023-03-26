@@ -64,13 +64,12 @@ public class Actualizar_Contacto extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actualizar_contacto);
+        setChildContentView(R.layout.activity_actualizar_contacto);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Actualizar contacto");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         InicializarVistas();
         RecuperarDatos();

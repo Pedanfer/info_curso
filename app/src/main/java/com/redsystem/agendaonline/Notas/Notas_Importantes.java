@@ -46,12 +46,11 @@ public class Notas_Importantes extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notas_archivadas);
+        setChildContentView(R.layout.activity_notas_archivadas);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Notas importantes");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         RecyclerViewNotasImportantes = findViewById(R.id.RecyclerViewNotasImportantes);
         RecyclerViewNotasImportantes.setHasFixedSize(true);

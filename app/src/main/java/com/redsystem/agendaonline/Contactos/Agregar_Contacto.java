@@ -40,13 +40,12 @@ public class Agregar_Contacto extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_contacto);
+        setChildContentView(R.layout.activity_agregar_contacto);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Agregar contacto");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         InicializarVariables();
         ObtenerUidUsuario();

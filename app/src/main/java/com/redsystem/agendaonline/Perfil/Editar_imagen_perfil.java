@@ -60,13 +60,12 @@ public class Editar_imagen_perfil extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editar_imagen_perfil);
+        setChildContentView(R.layout.activity_editar_imagen_perfil);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Seleccionar imagen");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         ImagenPerfilActualizar = findViewById(R.id.ImagenPerfilActualizar);
         BtnElegirImagenDe = findViewById(R.id.BtnElegirImagenDe);

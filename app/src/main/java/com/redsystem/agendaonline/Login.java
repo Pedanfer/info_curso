@@ -38,12 +38,11 @@ public class Login extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setChildContentView(R.layout.activity_login);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Login");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         CorreoLogin = findViewById(R.id.CorreoLogin);
         PassLogin = findViewById(R.id.PassLogin);

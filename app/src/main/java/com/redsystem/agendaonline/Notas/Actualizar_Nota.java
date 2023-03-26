@@ -53,12 +53,11 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actualizar_nota);
+        setChildContentView(R.layout.activity_actualizar_nota);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Actualizar nota");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         InicializarVistas();
         RecuperarDatos();

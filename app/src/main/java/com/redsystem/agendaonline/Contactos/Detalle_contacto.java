@@ -33,13 +33,12 @@ public class Detalle_contacto extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_contacto);
+        setChildContentView(R.layout.activity_detalle_contacto);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Detalle contacto");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         InicializarVariables();
         RecuperarDatosContacto();

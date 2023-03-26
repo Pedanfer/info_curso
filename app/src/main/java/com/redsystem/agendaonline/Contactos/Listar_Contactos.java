@@ -54,13 +54,12 @@ public class Listar_Contactos extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listar_contactos);
+        setChildContentView(R.layout.activity_listar_contactos);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Mis contactos");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         recyclerViewContactos = findViewById(R.id.recyclerViewContactos);
         recyclerViewContactos.setHasFixedSize(true);

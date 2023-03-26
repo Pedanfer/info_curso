@@ -59,12 +59,11 @@ public class Listar_Notas extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listar_notas);
+        setChildContentView(R.layout.activity_listar_notas);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Mis notas");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         recyclerviewNotas = findViewById(R.id.recyclerviewNotas);
         recyclerviewNotas.setHasFixedSize(true);

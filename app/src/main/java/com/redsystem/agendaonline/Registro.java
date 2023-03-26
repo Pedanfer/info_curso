@@ -39,12 +39,11 @@ public class Registro extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro);
+        setChildContentView(R.layout.activity_registro);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Registrar");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
 
         NombreEt = findViewById(R.id.NombreEt);
         CorreoEt = findViewById(R.id.CorreoEt);

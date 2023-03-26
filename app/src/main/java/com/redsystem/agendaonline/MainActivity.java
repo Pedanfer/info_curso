@@ -14,7 +14,7 @@ public class MainActivity extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setChildContentView(R.layout.activity_main);
 
         Btn_Login = findViewById(R.id.Btn_Login);
         Btn_Registro = findViewById(R.id.Btn_Registro);
