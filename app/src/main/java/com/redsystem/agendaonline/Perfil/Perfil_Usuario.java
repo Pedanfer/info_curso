@@ -3,6 +3,7 @@ package com.redsystem.agendaonline.Perfil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 public class Perfil_Usuario extends ToolBarActivity {
 
     ImageView Imagen_Perfil;
-    TextView Correo_Perfil, Uid_Perfil, Telefono_Perfil, Fecha_Nacimiento_Perfil;
+    TextView Correo_Perfil, Telefono_Perfil, Fecha_Nacimiento_Perfil;
     EditText Nombres_Perfil, Apellidos_Perfil, Edad_Perfil,
             Domicilio_Perfil, Universidad_Perfil,
             Profesion_Perfil;
@@ -102,7 +103,6 @@ public class Perfil_Usuario extends ToolBarActivity {
     private void InicializarVariables(){
         Imagen_Perfil = findViewById(R.id.Imagen_Perfil);
         Correo_Perfil = findViewById(R.id.Correo_Perfil);
-        Uid_Perfil = findViewById(R.id.Uid_Perfil);
         Nombres_Perfil = findViewById(R.id.Nombres_Perfil);
         Apellidos_Perfil = findViewById(R.id.Apellidos_Perfil);
         Edad_Perfil = findViewById(R.id.Edad_Perfil);
@@ -143,8 +143,6 @@ public class Perfil_Usuario extends ToolBarActivity {
                     String fecha_nacimiento = ""+snapshot.child("fecha_de_nacimiento").getValue();
                     String imagen_perfil = ""+snapshot.child("imagen_perfil").getValue();
 
-                    //Seteo de datos
-                    Uid_Perfil.setText(uid);
                     Nombres_Perfil.setText(nombre);
                     Apellidos_Perfil.setText(apellidos);
                     Correo_Perfil.setText(correo);
@@ -173,13 +171,14 @@ public class Perfil_Usuario extends ToolBarActivity {
     private void Cargar_Imagen(String imagen_perfil) {
         try {
             /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
-            Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.imagen_perfil_usuario).into(Imagen_Perfil);
+            Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.placeholder).into(Imagen_Perfil);
 
         }catch (Exception e){
             /*Si la imagen no fue traida con éxito*/
-            Glide.with(getApplicationContext()).load(R.drawable.imagen_perfil_usuario).into(Imagen_Perfil);
+            Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
 
         }
+        Editar_imagen.setElevation(11);
     }
 
     private void Establecer_telefono_usuario(){

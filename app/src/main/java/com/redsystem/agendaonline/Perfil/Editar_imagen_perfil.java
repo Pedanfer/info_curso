@@ -114,7 +114,7 @@ public class Editar_imagen_perfil extends ToolBarActivity {
 
                 Glide.with(getApplicationContext())
                         .load(imagen_perfil)
-                        .placeholder(R.drawable.imagen_perfil_usuario)
+                        .placeholder(R.drawable.placeholder)
                         .into(ImagenPerfilActualizar);
             }
 
