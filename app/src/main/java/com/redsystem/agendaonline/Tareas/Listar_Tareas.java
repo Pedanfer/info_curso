@@ -1,8 +1,7 @@
-package com.redsystem.agendaonline.Notas;
+package com.redsystem.agendaonline.Tareas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,25 +28,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.redsystem.agendaonline.Objetos.Nota;
+import com.redsystem.agendaonline.Objetos.Tarea;
 import com.redsystem.agendaonline.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.redsystem.agendaonline.ToolBarActivity;
-import com.redsystem.agendaonline.ViewHolder.ViewHolder_Nota;
+import com.redsystem.agendaonline.ViewHolder.ViewHolder_Tarea;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import org.jetbrains.annotations.NotNull;
+public class Listar_Tareas extends ToolBarActivity {
 
-public class Listar_Notas extends ToolBarActivity {
-
-    RecyclerView recyclerviewNotas;
+    RecyclerView recyclerviewTareas;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference BD_Usuarios;
 
     LinearLayoutManager linearLayoutManager;
 
-    FirebaseRecyclerAdapter<Nota, ViewHolder_Nota> firebaseRecyclerAdapter;
-    FirebaseRecyclerOptions<Nota> options;
+    FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea> firebaseRecyclerAdapter;
+    FirebaseRecyclerOptions<Tarea> options;
 
     Dialog dialog, dialog_filtrar;
 
@@ -59,20 +56,20 @@ public class Listar_Notas extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildContentView(R.layout.activity_listar_notas);
+        setChildContentView(R.layout.activity_listar_tareas);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Mis notas");
+        actionBar.setTitle(R.string.ListarTareas);
 
 
-        recyclerviewNotas = findViewById(R.id.recyclerviewNotas);
-        recyclerviewNotas.setHasFixedSize(true);
+        recyclerviewTareas = findViewById(R.id.recyclerviewTareas);
+        recyclerviewTareas.setHasFixedSize(true);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        dialog = new Dialog(Listar_Notas.this);
-        dialog_filtrar = new Dialog(Listar_Notas.this);
+        dialog = new Dialog(Listar_Tareas.this);
+        dialog_filtrar = new Dialog(Listar_Tareas.this);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
@@ -80,54 +77,54 @@ public class Listar_Notas extends ToolBarActivity {
 
     }
 
-    private void ListarTodasNotas(){
+    private void ListarTodasTareas(){
         //consulta
-        Query query = BD_Usuarios.child(user.getUid()).child("Notas_Publicadas").orderByChild("fecha_nota");
-        options = new FirebaseRecyclerOptions.Builder<Nota>().setQuery(query, Nota.class).build();
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Nota, ViewHolder_Nota>(options) {
+        Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("fecha_tarea");
+        options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder_Nota viewHolder_nota, int position, @NotNull Nota nota) {
-                viewHolder_nota.SetearDatos(
+            protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                viewHolder_tarea.SetearDatos(
                         getApplicationContext(),
-                        nota.getId_nota(),
-                        nota.getUid_usuario(),
-                        nota.getCorreo_usuario(),
-                        nota.getFecha_hora_actual(),
-                        nota.getTitulo(),
-                        nota.getDescripcion(),
-                        nota.getFecha_nota(),
-                        nota.getEstado()
+                        _tarea.getId_tarea(),
+                        _tarea.getUid_usuario(),
+                        _tarea.getCorreo_usuario(),
+                        _tarea.getFecha_hora_actual(),
+                        _tarea.getTitulo(),
+                        _tarea.getDescripcion(),
+                        _tarea.getFecha_tarea(),
+                        _tarea.getEstado()
                 );
             }
 
 
             @Override
-            public ViewHolder_Nota onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nota,parent,false);
-                ViewHolder_Nota viewHolder_nota = new ViewHolder_Nota(view);
-                viewHolder_nota.setOnClickListener(new ViewHolder_Nota.ClickListener() {
+            public ViewHolder_Tarea onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tarea,parent,false);
+                ViewHolder_Tarea viewHolder_tarea = new ViewHolder_Tarea(view);
+                viewHolder_tarea.setOnClickListener(new ViewHolder_Tarea.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Enviamos los datos a la siguiente actividad
-                        Intent intent = new Intent(Listar_Notas.this, Detalle_Nota.class);
-                        intent.putExtra("id_nota", id_nota);
+                        Intent intent = new Intent(Listar_Tareas.this, Detalle_Tarea.class);
+                        intent.putExtra("id_tarea", id_tarea);
                         intent.putExtra("uid_usuario", uid_usuario);
                         intent.putExtra("correo_usuario", correo_usuario);
                         intent.putExtra("fecha_registro", fecha_registro);
                         intent.putExtra("titulo", titulo);
                         intent.putExtra("descripcion", descripcion);
-                        intent.putExtra("fecha_nota", fecha_nota);
+                        intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
                         startActivity(intent);
                     }
@@ -135,14 +132,14 @@ public class Listar_Notas extends ToolBarActivity {
                     @Override
                     public void onItemLongClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Declarar las vistas
@@ -158,7 +155,7 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Eliminar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                EliminarNota(id_nota);
+                                EliminarTarea(id_tarea);
                                 dialog.dismiss();
                             }
                         });
@@ -166,16 +163,16 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Actualizar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //Toast.makeText(Listar_Notas.this, "Actualizar nota", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(Listar_Notas.this, Actualizar_Nota.class));
-                                Intent intent = new Intent(Listar_Notas.this, Actualizar_Nota.class);
-                                intent.putExtra("id_nota", id_nota);
+                                //Toast.makeText(Listar_Tareas.this, "Actualizar _tarea", Toast.LENGTH_SHORT).show();
+                                //startActivity(new Intent(Listar_Tareas.this, Actualizar_Tarea.class));
+                                Intent intent = new Intent(Listar_Tareas.this, Actualizar_Tarea.class);
+                                intent.putExtra("id_tarea", id_tarea);
                                 intent.putExtra("uid_usuario", uid_usuario);
                                 intent.putExtra("correo_usuario", correo_usuario);
                                 intent.putExtra("fecha_registro", fecha_registro);
                                 intent.putExtra("titulo", titulo);
                                 intent.putExtra("descripcion", descripcion);
-                                intent.putExtra("fecha_nota", fecha_nota);
+                                intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
                                 startActivity(intent);
                                 dialog.dismiss();
@@ -185,68 +182,68 @@ public class Listar_Notas extends ToolBarActivity {
                         dialog.show();
                     }
                 });
-                return viewHolder_nota;
+                return viewHolder_tarea;
             }
         };
 
-        linearLayoutManager = new LinearLayoutManager(Listar_Notas.this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(Listar_Tareas.this, LinearLayoutManager.VERTICAL, false);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
-        recyclerviewNotas.setLayoutManager(linearLayoutManager);
-        recyclerviewNotas.setAdapter(firebaseRecyclerAdapter);
+        recyclerviewTareas.setLayoutManager(linearLayoutManager);
+        recyclerviewTareas.setAdapter(firebaseRecyclerAdapter);
 
     }
 
-    private void ListarNotasFinalizadas(){
+    private void ListarTareasFinalizadas(){
         //consulta
-        String estado_nota = "Finalizado";
-        Query query = BD_Usuarios.child(user.getUid()).child("Notas_Publicadas").orderByChild("estado").equalTo(estado_nota);
-        options = new FirebaseRecyclerOptions.Builder<Nota>().setQuery(query, Nota.class).build();
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Nota, ViewHolder_Nota>(options) {
+        String estado_tarea = "Finalizado";
+        Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("estado").equalTo(estado_tarea);
+        options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder_Nota viewHolder_nota, int position, @NotNull Nota nota) {
-                viewHolder_nota.SetearDatos(
+            protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                viewHolder_tarea.SetearDatos(
                         getApplicationContext(),
-                        nota.getId_nota(),
-                        nota.getUid_usuario(),
-                        nota.getCorreo_usuario(),
-                        nota.getFecha_hora_actual(),
-                        nota.getTitulo(),
-                        nota.getDescripcion(),
-                        nota.getFecha_nota(),
-                        nota.getEstado()
+                        _tarea.getId_tarea(),
+                        _tarea.getUid_usuario(),
+                        _tarea.getCorreo_usuario(),
+                        _tarea.getFecha_hora_actual(),
+                        _tarea.getTitulo(),
+                        _tarea.getDescripcion(),
+                        _tarea.getFecha_tarea(),
+                        _tarea.getEstado()
                 );
             }
 
 
             @Override
-            public ViewHolder_Nota onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nota,parent,false);
-                ViewHolder_Nota viewHolder_nota = new ViewHolder_Nota(view);
-                viewHolder_nota.setOnClickListener(new ViewHolder_Nota.ClickListener() {
+            public ViewHolder_Tarea onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tarea,parent,false);
+                ViewHolder_Tarea viewHolder_tarea = new ViewHolder_Tarea(view);
+                viewHolder_tarea.setOnClickListener(new ViewHolder_Tarea.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Enviamos los datos a la siguiente actividad
-                        Intent intent = new Intent(Listar_Notas.this, Detalle_Nota.class);
-                        intent.putExtra("id_nota", id_nota);
+                        Intent intent = new Intent(Listar_Tareas.this, Detalle_Tarea.class);
+                        intent.putExtra("id_tarea", id_tarea);
                         intent.putExtra("uid_usuario", uid_usuario);
                         intent.putExtra("correo_usuario", correo_usuario);
                         intent.putExtra("fecha_registro", fecha_registro);
                         intent.putExtra("titulo", titulo);
                         intent.putExtra("descripcion", descripcion);
-                        intent.putExtra("fecha_nota", fecha_nota);
+                        intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
                         startActivity(intent);
                     }
@@ -254,14 +251,14 @@ public class Listar_Notas extends ToolBarActivity {
                     @Override
                     public void onItemLongClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Declarar las vistas
@@ -277,7 +274,7 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Eliminar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                EliminarNota(id_nota);
+                                EliminarTarea(id_tarea);
                                 dialog.dismiss();
                             }
                         });
@@ -285,16 +282,16 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Actualizar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //Toast.makeText(Listar_Notas.this, "Actualizar nota", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(Listar_Notas.this, Actualizar_Nota.class));
-                                Intent intent = new Intent(Listar_Notas.this, Actualizar_Nota.class);
-                                intent.putExtra("id_nota", id_nota);
+                                //Toast.makeText(Listar_Tareas.this, "Actualizar _tarea", Toast.LENGTH_SHORT).show();
+                                //startActivity(new Intent(Listar_Tareas.this, Actualizar_Tarea.class));
+                                Intent intent = new Intent(Listar_Tareas.this, Actualizar_Tarea.class);
+                                intent.putExtra("id_tarea", id_tarea);
                                 intent.putExtra("uid_usuario", uid_usuario);
                                 intent.putExtra("correo_usuario", correo_usuario);
                                 intent.putExtra("fecha_registro", fecha_registro);
                                 intent.putExtra("titulo", titulo);
                                 intent.putExtra("descripcion", descripcion);
-                                intent.putExtra("fecha_nota", fecha_nota);
+                                intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
                                 startActivity(intent);
                                 dialog.dismiss();
@@ -304,68 +301,68 @@ public class Listar_Notas extends ToolBarActivity {
                         dialog.show();
                     }
                 });
-                return viewHolder_nota;
+                return viewHolder_tarea;
             }
         };
 
-        linearLayoutManager = new LinearLayoutManager(Listar_Notas.this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(Listar_Tareas.this, LinearLayoutManager.VERTICAL, false);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
-        recyclerviewNotas.setLayoutManager(linearLayoutManager);
-        recyclerviewNotas.setAdapter(firebaseRecyclerAdapter);
+        recyclerviewTareas.setLayoutManager(linearLayoutManager);
+        recyclerviewTareas.setAdapter(firebaseRecyclerAdapter);
 
     }
 
-    private void ListarNotasNoFinalizadas(){
+    private void ListarTareasNoFinalizadas(){
         //consulta
-        String estado_nota = "No finalizado";
-        Query query = BD_Usuarios.child(user.getUid()).child("Notas_Publicadas").orderByChild("estado").equalTo(estado_nota);
-        options = new FirebaseRecyclerOptions.Builder<Nota>().setQuery(query, Nota.class).build();
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Nota, ViewHolder_Nota>(options) {
+        String estado_tarea = "No finalizado";
+        Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("estado").equalTo(estado_tarea);
+        options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHolder_Nota viewHolder_nota, int position, @NotNull Nota nota) {
-                viewHolder_nota.SetearDatos(
+            protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                viewHolder_tarea.SetearDatos(
                         getApplicationContext(),
-                        nota.getId_nota(),
-                        nota.getUid_usuario(),
-                        nota.getCorreo_usuario(),
-                        nota.getFecha_hora_actual(),
-                        nota.getTitulo(),
-                        nota.getDescripcion(),
-                        nota.getFecha_nota(),
-                        nota.getEstado()
+                        _tarea.getId_tarea(),
+                        _tarea.getUid_usuario(),
+                        _tarea.getCorreo_usuario(),
+                        _tarea.getFecha_hora_actual(),
+                        _tarea.getTitulo(),
+                        _tarea.getDescripcion(),
+                        _tarea.getFecha_tarea(),
+                        _tarea.getEstado()
                 );
             }
 
 
             @Override
-            public ViewHolder_Nota onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nota,parent,false);
-                ViewHolder_Nota viewHolder_nota = new ViewHolder_Nota(view);
-                viewHolder_nota.setOnClickListener(new ViewHolder_Nota.ClickListener() {
+            public ViewHolder_Tarea onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tarea,parent,false);
+                ViewHolder_Tarea viewHolder_tarea = new ViewHolder_Tarea(view);
+                viewHolder_tarea.setOnClickListener(new ViewHolder_Tarea.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Enviamos los datos a la siguiente actividad
-                        Intent intent = new Intent(Listar_Notas.this, Detalle_Nota.class);
-                        intent.putExtra("id_nota", id_nota);
+                        Intent intent = new Intent(Listar_Tareas.this, Detalle_Tarea.class);
+                        intent.putExtra("id_tarea", id_tarea);
                         intent.putExtra("uid_usuario", uid_usuario);
                         intent.putExtra("correo_usuario", correo_usuario);
                         intent.putExtra("fecha_registro", fecha_registro);
                         intent.putExtra("titulo", titulo);
                         intent.putExtra("descripcion", descripcion);
-                        intent.putExtra("fecha_nota", fecha_nota);
+                        intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
                         startActivity(intent);
                     }
@@ -373,14 +370,14 @@ public class Listar_Notas extends ToolBarActivity {
                     @Override
                     public void onItemLongClick(View view, int position) {
 
-                        //Obtener los datos de la nota seleccionada
-                        String id_nota = getItem(position).getId_nota();
+                        //Obtener los datos de la _tarea seleccionada
+                        String id_tarea = getItem(position).getId_tarea();
                         String uid_usuario = getItem(position).getUid_usuario();
                         String correo_usuario = getItem(position).getCorreo_usuario();
                         String fecha_registro = getItem(position).getFecha_hora_actual();
                         String titulo = getItem(position).getTitulo();
                         String descripcion = getItem(position).getDescripcion();
-                        String fecha_nota = getItem(position).getFecha_nota();
+                        String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
 
                         //Declarar las vistas
@@ -396,7 +393,7 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Eliminar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                EliminarNota(id_nota);
+                                EliminarTarea(id_tarea);
                                 dialog.dismiss();
                             }
                         });
@@ -404,16 +401,16 @@ public class Listar_Notas extends ToolBarActivity {
                         CD_Actualizar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //Toast.makeText(Listar_Notas.this, "Actualizar nota", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(Listar_Notas.this, Actualizar_Nota.class));
-                                Intent intent = new Intent(Listar_Notas.this, Actualizar_Nota.class);
-                                intent.putExtra("id_nota", id_nota);
+                                //Toast.makeText(Listar_Tareas.this, "Actualizar _tarea", Toast.LENGTH_SHORT).show();
+                                //startActivity(new Intent(Listar_Tareas.this, Actualizar_Tarea.class));
+                                Intent intent = new Intent(Listar_Tareas.this, Actualizar_Tarea.class);
+                                intent.putExtra("id_tarea", id_tarea);
                                 intent.putExtra("uid_usuario", uid_usuario);
                                 intent.putExtra("correo_usuario", correo_usuario);
                                 intent.putExtra("fecha_registro", fecha_registro);
                                 intent.putExtra("titulo", titulo);
                                 intent.putExtra("descripcion", descripcion);
-                                intent.putExtra("fecha_nota", fecha_nota);
+                                intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
                                 startActivity(intent);
                                 dialog.dismiss();
@@ -423,41 +420,41 @@ public class Listar_Notas extends ToolBarActivity {
                         dialog.show();
                     }
                 });
-                return viewHolder_nota;
+                return viewHolder_tarea;
             }
         };
 
-        linearLayoutManager = new LinearLayoutManager(Listar_Notas.this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(Listar_Tareas.this, LinearLayoutManager.VERTICAL, false);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
-        recyclerviewNotas.setLayoutManager(linearLayoutManager);
-        recyclerviewNotas.setAdapter(firebaseRecyclerAdapter);
+        recyclerviewTareas.setLayoutManager(linearLayoutManager);
+        recyclerviewTareas.setAdapter(firebaseRecyclerAdapter);
 
     }
 
-    private void EliminarNota(String id_nota) {
+    private void EliminarTarea(String id_tarea) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Notas.this);
-        builder.setTitle("Eliminar nota");
-        builder.setMessage("¿Desea eliminar la nota?");
+        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Tareas.this);
+        builder.setTitle("Eliminar tarea");
+        builder.setMessage("¿Desea eliminar la tarea?");
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //ELIMINAR NOTA EN BD
-                Query query = BD_Usuarios.child(user.getUid()).child("Notas_Publicadas").orderByChild("id_nota").equalTo(id_nota);
+                Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("id_tarea").equalTo(id_tarea);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot ds : snapshot.getChildren()){
                             ds.getRef().removeValue();
                         }
-                        Toast.makeText(Listar_Notas.this, "Nota eliminada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Listar_Tareas.this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                        Toast.makeText(Listar_Notas.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Listar_Tareas.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -466,30 +463,30 @@ public class Listar_Notas extends ToolBarActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(Listar_Notas.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listar_Tareas.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
             }
         });
 
         builder.create().show();
     }
 
-    private void Vaciar_Registro_De_Notas() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Notas.this);
+    private void Vaciar_Registro_De_tareas() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Tareas.this);
         builder.setTitle("Vaciar todos los registros");
-        builder.setMessage("¿Estás seguro(a) de eliminar todas las notas?");
+        builder.setMessage("¿Estás seguro(a) de eliminar todas las Tareas?");
 
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Eliminación de todas las notas
-                Query query = BD_Usuarios.child(user.getUid()).child("Notas_Publicadas");
+                //Eliminación de todas las Tareas
+                Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot ds : snapshot.getChildren()){
                             ds.getRef().removeValue();
                         }
-                        Toast.makeText(Listar_Notas.this, "Todas las notas se han eliminado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Listar_Tareas.this, "Todas las Tareas se han eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -503,7 +500,7 @@ public class Listar_Notas extends ToolBarActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Listar_Notas.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listar_Tareas.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -513,17 +510,17 @@ public class Listar_Notas extends ToolBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_notas, menu);
+        inflater.inflate(R.menu.menu_tareas, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Vaciar_Todas_Las_Notas){
-            Vaciar_Registro_De_Notas();
+        if (item.getItemId() == R.id.Vaciar_Todas_Las_Tareas){
+            Vaciar_Registro_De_tareas();
         }
-        if (item.getItemId() == R.id.Filtrar_Notas){
-            FiltrarNotas();
+        if (item.getItemId() == R.id.Filtrar_Tareas){
+            FiltrarTareas();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -536,47 +533,47 @@ public class Listar_Notas extends ToolBarActivity {
         }
     }
 
-    private void FiltrarNotas(){
-        Button Todas_notas, Notas_Finalizadas, Notas_No_Finalizadas;
+    private void FiltrarTareas(){
+        Button Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas;
 
-        dialog_filtrar.setContentView(R.layout.cuadro_dialogo_filtrar_notas);
+        dialog_filtrar.setContentView(R.layout.cuadro_dialogo_filtrar_tareas);
 
-        Todas_notas = dialog_filtrar.findViewById(R.id.Todas_notas);
-        Notas_Finalizadas = dialog_filtrar.findViewById(R.id.Notas_Finalizadas);
-        Notas_No_Finalizadas = dialog_filtrar.findViewById(R.id.Notas_No_Finalizadas);
+        Todas_tareas = dialog_filtrar.findViewById(R.id.Todas_Tareas);
+        Tareas_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_Finalizadas);
+        Tareas_No_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_No_Finalizadas);
 
-        Todas_notas.setOnClickListener(new View.OnClickListener() {
+        Todas_tareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Listar", "Todas");
                 editor.apply();
                 recreate();
-                Toast.makeText(Listar_Notas.this, "Todas las notas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listar_Tareas.this, "Todas las Tareas", Toast.LENGTH_SHORT).show();
                 dialog_filtrar.dismiss();
             }
         });
 
-        Notas_Finalizadas.setOnClickListener(new View.OnClickListener() {
+        Tareas_Finalizadas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Listar", "Finalizados");
                 editor.apply();
                 recreate();
-                Toast.makeText(Listar_Notas.this, "Notas finalizadas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listar_Tareas.this, "Tareas finalizadas", Toast.LENGTH_SHORT).show();
                 dialog_filtrar.dismiss();
             }
         });
 
-        Notas_No_Finalizadas.setOnClickListener(new View.OnClickListener() {
+        Tareas_No_Finalizadas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Listar", "No finalizados");
                 editor.apply();
                 recreate();
-                Toast.makeText(Listar_Notas.this, "Notas no finalizadas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listar_Tareas.this, "Tareas no finalizadas", Toast.LENGTH_SHORT).show();
                 dialog_filtrar.dismiss();
             }
         });
@@ -585,19 +582,19 @@ public class Listar_Notas extends ToolBarActivity {
     }
 
     private void Estado_Filtro(){
-        sharedPreferences = Listar_Notas.this.getSharedPreferences("Notas", MODE_PRIVATE);
+        sharedPreferences = Listar_Tareas.this.getSharedPreferences("Tareas", MODE_PRIVATE);
 
         String estado_filtro = sharedPreferences.getString("Listar", "Todas");
 
         switch (estado_filtro){
             case "Todas":
-                ListarTodasNotas();
+                ListarTodasTareas();
                 break;
             case "Finalizados":
-                ListarNotasFinalizadas();
+                ListarTareasFinalizadas();
                 break;
             case "No finalizados":
-                ListarNotasNoFinalizadas();
+                ListarTareasNoFinalizadas();
                 break;
         }
 

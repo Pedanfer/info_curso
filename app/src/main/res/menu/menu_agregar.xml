@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/Agregar_Nota_BD"
-        android:icon="@drawable/icono_agregar_nota"
-        android:title="@string/Agregar_Nota_BD"
+        android:id="@+id/Agregar_tarea_BD"
+        android:icon="@drawable/icono_agregar_tarea"
+        android:title="@string/Agregar_Tarea_BD"
         app:showAsAction="ifRoom">
 
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Notas.Detalle_Nota">
+    tools:context=".Tareas.Detalle_Tarea">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -30,11 +30,11 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/id_nota_detalle"/>
+                    android:src="@drawable/id_tarea_detalle"/>
 
                 <!--TXT-->
                 <TextView
-                    android:text="@string/Id_nota_Detalle_TXT"
+                    android:text="@string/Id_tarea_Detalle_TXT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -46,8 +46,8 @@
 
             <!--DATO - ID NOTA-->
             <TextView
-                android:id="@+id/Id_nota_Detalle"
-                android:text="@string/Id_nota_Detalle"
+                android:id="@+id/Id_tarea_Detalle"
+                android:text="@string/Id_tarea_Detalle"
                 android:fontFamily="@font/worksans"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -141,7 +141,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/titulo_nota_detalle"/>
+                    android:src="@drawable/titulo_tarea_detalle"/>
 
                 <!--TXT-->
                 <TextView
@@ -178,7 +178,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/descripcion_nota_detalle"/>
+                    android:src="@drawable/descripcion_tarea_detalle"/>
 
                 <!--TXT-->
                 <TextView
@@ -215,7 +215,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/fecha_registro_nota_detalle"/>
+                    android:src="@drawable/fecha_registro_tarea_detalle"/>
 
                 <!--TXT-->
                 <TextView
@@ -252,11 +252,11 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/fecha_nota_detalle"/>
+                    android:src="@drawable/fecha_tarea_detalle"/>
 
                 <!--TXT-->
                 <TextView
-                    android:text="@string/Fecha_Nota_Detalle_TXT"
+                    android:text="@string/Fecha_Tarea_Detalle_TXT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -268,8 +268,8 @@
 
             <!--DATO - FECHA NOTA-->
             <TextView
-                android:id="@+id/Fecha_Nota_Detalle"
-                android:text="@string/Fecha_Nota_Detalle"
+                android:id="@+id/Fecha_Tarea_Detalle"
+                android:text="@string/Fecha_Tarea_Detalle"
                 android:fontFamily="@font/worksans"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -328,7 +328,7 @@
                 android:text="@string/Boton_Importante"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/worksans"
-                android:drawableTop="@drawable/icono_nota_no_importante"
+                android:drawableTop="@drawable/icono_tarea_no_importante"
                 android:textColor="#fff"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_width="match_parent"

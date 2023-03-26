@@ -1,8 +1,9 @@
-package com.redsystem.agendaonline.Notas;
+package com.redsystem.agendaonline.Tareas;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,56 +23,56 @@ import com.redsystem.agendaonline.ToolBarActivity;
 
 import java.util.HashMap;
 
-public class Detalle_Nota extends ToolBarActivity {
+public class Detalle_Tarea extends ToolBarActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
     Button Boton_Importante;
 
-    TextView Id_nota_Detalle, Uid_usuario_Detalle, Correo_usuario_Detalle, Titulo_Detalle, Descripcion_Detalle,
-            Fecha_Registro_Detalle, Fecha_Nota_Detalle, Estado_Detalle;
+    TextView Id_tarea_Detalle, Uid_usuario_Detalle, Correo_usuario_Detalle, Titulo_Detalle, Descripcion_Detalle,
+            Fecha_Registro_Detalle, Fecha_Tarea_Detalle, Estado_Detalle;
 
     //DECLARAR LOS STRING PARA ALMACENAR LOS DATOS RECUPERADOS DE ACTIVIDAD ANTERIOR
-    String id_nota_R , uid_usuario_R , correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
+    String id_tarea_R , uid_usuario_R , correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
 
-    boolean ComprobarNotaImportante = false;
+    boolean ComprobarTareaImportante = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildContentView(R.layout.activity_detalle_nota);
+        setChildContentView(R.layout.activity_detalle_tarea);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Detalle de nota");
+        actionBar.setTitle("Detalle de tarea");
 
 
         InicializarVistas();
         RecuperarDatos();
         SetearDatosRecuperados();
-        VerificarNotaImportante();
+        VerificarTareaImportante();
 
         Boton_Importante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ComprobarNotaImportante){
-                    Eliminar_Nota_Importante();
+                if (ComprobarTareaImportante){
+                    Eliminar_Tarea_Importante();
                 }else {
-                    Agregar_Notas_Importantes();
+                    Agregar_Tareas_Importantes();
                 }
             }
         });
     }
 
     private void InicializarVistas(){
-        Id_nota_Detalle = findViewById(R.id.Id_nota_Detalle);
+        Id_tarea_Detalle = findViewById(R.id.Id_tarea_Detalle);
         Uid_usuario_Detalle = findViewById(R.id.Uid_usuario_Detalle);
         Correo_usuario_Detalle = findViewById(R.id.Correo_usuario_Detalle);
         Titulo_Detalle = findViewById(R.id.Titulo_Detalle);
         Descripcion_Detalle = findViewById(R.id.Descripcion_Detalle);
         Fecha_Registro_Detalle = findViewById(R.id.Fecha_Registro_Detalle);
-        Fecha_Nota_Detalle = findViewById(R.id.Fecha_Nota_Detalle);
+        Fecha_Tarea_Detalle = findViewById(R.id.Fecha_Tarea_Detalle);
         Estado_Detalle = findViewById(R.id.Estado_Detalle);
         Boton_Importante = findViewById(R.id.Boton_Importante);
 
@@ -82,94 +83,94 @@ public class Detalle_Nota extends ToolBarActivity {
     private void RecuperarDatos(){
         Bundle intent = getIntent().getExtras();
 
-        id_nota_R = intent.getString("id_nota");
+        id_tarea_R = intent.getString("id_tarea");
         uid_usuario_R = intent.getString("uid_usuario");
         correo_usuario_R = intent.getString("correo_usuario");
         fecha_registro_R = intent.getString("fecha_registro");
         titulo_R = intent.getString("titulo");
         descripcion_R = intent.getString("descripcion");
-        fecha_R = intent.getString("fecha_nota");
+        fecha_R = intent.getString("fecha_tarea");
         estado_R = intent.getString("estado");
 
     }
 
     private void SetearDatosRecuperados(){
-        Id_nota_Detalle.setText(id_nota_R);
+        Id_tarea_Detalle.setText(id_tarea_R);
         Uid_usuario_Detalle.setText(uid_usuario_R);
         Correo_usuario_Detalle.setText(correo_usuario_R);
         Fecha_Registro_Detalle.setText(fecha_registro_R);
         Titulo_Detalle.setText(titulo_R);
         Descripcion_Detalle.setText(descripcion_R);
-        Fecha_Nota_Detalle.setText(fecha_R);
+        Fecha_Tarea_Detalle.setText(fecha_R);
         Estado_Detalle.setText(estado_R);
     }
 
-    private void Agregar_Notas_Importantes(){
+    private void Agregar_Tareas_Importantes(){
         if (user == null){
             //Si el usuario es nulo
-            Toast.makeText(Detalle_Nota.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Detalle_Tarea.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
         }else {
-            //Obtenemos los datos de la nota de la actividad anterior
+            //Obtenemos los datos de la _tarea de la actividad anterior
             Bundle intent = getIntent().getExtras();
 
-            id_nota_R = intent.getString("id_nota");
+            id_tarea_R = intent.getString("id_tarea");
             uid_usuario_R = intent.getString("uid_usuario");
             correo_usuario_R = intent.getString("correo_usuario");
             fecha_registro_R = intent.getString("fecha_registro");
             titulo_R = intent.getString("titulo");
             descripcion_R = intent.getString("descripcion");
-            fecha_R = intent.getString("fecha_nota");
+            fecha_R = intent.getString("fecha_tarea");
             estado_R = intent.getString("estado");
 
 
 
-            HashMap<String , String> Nota_Importante = new HashMap<>();
-            Nota_Importante.put("id_nota", id_nota_R);
-            Nota_Importante.put("uid_usuario", uid_usuario_R);
-            Nota_Importante.put("correo_usuario", correo_usuario_R);
-            Nota_Importante.put("fecha_hora_actual", fecha_registro_R);
-            Nota_Importante.put("titulo", titulo_R);
-            Nota_Importante.put("descripcion", descripcion_R);
-            Nota_Importante.put("fecha_nota", fecha_R);
-            Nota_Importante.put("estado", estado_R);
+            HashMap<String , String> Tarea_Importante = new HashMap<>();
+            Tarea_Importante.put("id_tarea", id_tarea_R);
+            Tarea_Importante.put("uid_usuario", uid_usuario_R);
+            Tarea_Importante.put("correo_usuario", correo_usuario_R);
+            Tarea_Importante.put("fecha_hora_actual", fecha_registro_R);
+            Tarea_Importante.put("titulo", titulo_R);
+            Tarea_Importante.put("descripcion", descripcion_R);
+            Tarea_Importante.put("fecha_tarea", fecha_R);
+            Tarea_Importante.put("estado", estado_R);
 
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis notas importantes").child(id_nota_R)
-                    .setValue(Nota_Importante)
+            reference.child(firebaseAuth.getUid()).child("Mis Tareas importantes").child(id_tarea_R)
+                    .setValue(Tarea_Importante)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(Detalle_Nota.this, "Se ha añadido a notas importantes", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Detalle_Tarea.this, "Se ha añadido a Tareas importantes", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Detalle_Nota.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Detalle_Tarea.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    private void Eliminar_Nota_Importante(){
+    private void Eliminar_Tarea_Importante(){
         if (user == null){
-            Toast.makeText(Detalle_Nota.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Detalle_Tarea.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
         }else {
             Bundle intent = getIntent().getExtras();
-            id_nota_R = intent.getString("id_nota");
+            id_tarea_R = intent.getString("id_tarea");
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis notas importantes").child(id_nota_R)
+            reference.child(firebaseAuth.getUid()).child("Mis Tareas importantes").child(id_tarea_R)
                     .removeValue()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(Detalle_Nota.this, "La nota ya no es importante", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Detalle_Tarea.this, "La tarea ya no es importante", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Detalle_Nota.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Detalle_Tarea.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -177,26 +178,26 @@ public class Detalle_Nota extends ToolBarActivity {
     }
 
 
-    private void VerificarNotaImportante(){
+    private void VerificarTareaImportante(){
         if (user == null){
-            Toast.makeText(Detalle_Nota.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Detalle_Tarea.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
         }else {
             Bundle intent = getIntent().getExtras();
-            id_nota_R = intent.getString("id_nota");
+            id_tarea_R = intent.getString("id_tarea");
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis notas importantes").child(id_nota_R)
+            reference.child(firebaseAuth.getUid()).child("Mis Tareas importantes").child(id_tarea_R)
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            ComprobarNotaImportante = snapshot.exists();
-                            if (ComprobarNotaImportante){
+                            ComprobarTareaImportante = snapshot.exists();
+                            if (ComprobarTareaImportante){
                                 String importante = "Importante";
-                                Boton_Importante.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.icono_nota_importante, 0 , 0);
+                                Boton_Importante.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.icono_tarea_importante, 0 , 0);
                                 Boton_Importante.setText(importante);
                             }else {
                                 String no_importante = "No importante";
-                                Boton_Importante.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.icono_nota_no_importante, 0 , 0);
+                                Boton_Importante.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.icono_tarea_no_importante, 0 , 0);
                                 Boton_Importante.setText(no_importante);
                             }
                         }

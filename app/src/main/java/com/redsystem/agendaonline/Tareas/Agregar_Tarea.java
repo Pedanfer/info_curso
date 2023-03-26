@@ -1,8 +1,7 @@
-package com.redsystem.agendaonline.Notas;
+package com.redsystem.agendaonline.Tareas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.redsystem.agendaonline.Objetos.Nota;
+import com.redsystem.agendaonline.Objetos.Tarea;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 
@@ -28,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Agregar_Nota extends ToolBarActivity {
+public class Agregar_Tarea extends ToolBarActivity {
 
     TextView Uid_Usuario, Correo_usuario, Fecha_hora_actual, Fecha, Estado;
     EditText Titulo, Descripcion;
@@ -44,10 +43,10 @@ public class Agregar_Nota extends ToolBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildContentView(R.layout.activity_agregar_nota);
+        setChildContentView(R.layout.activity_agregar_tarea);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
+        actionBar.setTitle("Agregar tarea");
 
 
         InicializarVariables();
@@ -63,7 +62,7 @@ public class Agregar_Nota extends ToolBarActivity {
                 mes = calendario.get(Calendar.MONTH);
                 anio = calendario.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Agregar_Nota.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Agregar_Tarea.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int AnioSeleccionado, int MesSeleccionado, int DiaSeleccionado) {
 
@@ -134,7 +133,7 @@ public class Agregar_Nota extends ToolBarActivity {
         Fecha_hora_actual.setText(Fecha_hora_registro);
     }
 
-    private void Agregar_Nota(){
+    private void Agregar_Tarea(){
 
         //Obtener los datos
         String uid_usuario = Uid_Usuario.getText().toString();
@@ -144,13 +143,13 @@ public class Agregar_Nota extends ToolBarActivity {
         String descripcion = Descripcion.getText().toString();
         String fecha = Fecha.getText().toString();
         String estado = Estado.getText().toString();
-        String id_nota = BD_Firebase.push().getKey();
+        String id_tarea = BD_Firebase.push().getKey();
 
         //Validar datos
         if (!uid_usuario.equals("") && !correo_usuario.equals("") && !fecha_hora_actual.equals("") &&
                 !titulo.equals("") && !descripcion.equals("") && ! fecha.equals("") && !estado.equals("")){
 
-            Nota nota = new Nota(id_nota,
+            Tarea tarea = new Tarea(id_tarea,
                     uid_usuario,
                     correo_usuario,
                     fecha_hora_actual,
@@ -161,12 +160,12 @@ public class Agregar_Nota extends ToolBarActivity {
 
 
             //Establecer el nombre de la BD
-            String Nombre_BD = "Notas_Publicadas";
+            String Nombre_BD = "Tareas_Publicadas";
 
-            assert id_nota != null;
-            BD_Firebase.child(user.getUid()).child(Nombre_BD).child(id_nota).setValue(nota);
+            assert id_tarea != null;
+            BD_Firebase.child(user.getUid()).child(Nombre_BD).child(id_tarea).setValue(tarea);
 
-            Toast.makeText(this, "Se ha agregado la nota exitosamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Se ha agregado la tarea exitosamente", Toast.LENGTH_SHORT).show();
             onBackPressed();
 
         }
@@ -184,8 +183,8 @@ public class Agregar_Nota extends ToolBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Agregar_Nota_BD) {
-            Agregar_Nota();
+        if (item.getItemId() == R.id.Agregar_tarea_BD) {
+            Agregar_Tarea();
         }
         return super.onOptionsItemSelected(item);
     }

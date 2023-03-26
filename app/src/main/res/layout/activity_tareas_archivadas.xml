@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Notas.Listar_Notas">
+    tools:context=".Tareas.Tareas_Importantes">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewNotas"
+        android:id="@+id/RecyclerViewTareasImportantes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

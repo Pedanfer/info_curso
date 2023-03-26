@@ -1,8 +1,7 @@
-package com.redsystem.agendaonline.Notas;
+package com.redsystem.agendaonline.Tareas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -33,14 +32,14 @@ import com.redsystem.agendaonline.ToolBarActivity;
 
 import java.util.Calendar;
 
-public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnItemSelectedListener {
+public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView Id_nota_A, Uid_Usuario_A, Correo_usuario_A, Fecha_registro_A , Fecha_A, Estado_A, Estado_nuevo;
+    TextView Id_tarea_A, Uid_Usuario_A, Correo_usuario_A, Fecha_registro_A , Fecha_A, Estado_A, Estado_nuevo;
     EditText Titulo_A, Descripcion_A;
     Button Btn_Calendario_A;
 
     //DECLARAR LOS STRING PARA ALMACENAR LOS DATOS RECUPERADOS DE ACTIVIDAD ANTERIOR
-    String id_nota_R , uid_usuario_R , correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
+    String id_tarea_R , uid_usuario_R , correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
 
     ImageView Tarea_Finalizada, Tarea_No_Finalizada;
 
@@ -53,16 +52,16 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildContentView(R.layout.activity_actualizar_nota);
+        setChildContentView(R.layout.activity_actualizar_tarea);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Actualizar nota");
+        actionBar.setTitle("Actualizar tarea");
 
 
         InicializarVistas();
         RecuperarDatos();
         SetearDatos();
-        ComprobarEstadoNota();
+        ComprobarEstadoTarea();
         Spinner_Estado();
 
         Btn_Calendario_A.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,7 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
     }
 
     private void InicializarVistas(){
-        Id_nota_A = findViewById(R.id.Id_nota_A);
+        Id_tarea_A = findViewById(R.id.Id_tarea_A);
         Uid_Usuario_A = findViewById(R.id.Uid_Usuario_A);
         Correo_usuario_A = findViewById(R.id.Correo_usuario_A);
         Fecha_registro_A = findViewById(R.id.Fecha_registro_A);
@@ -97,13 +96,13 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
     private void RecuperarDatos(){
         Bundle intent = getIntent().getExtras();
 
-        id_nota_R = intent.getString("id_nota");
+        id_tarea_R = intent.getString("id_tarea");
         uid_usuario_R = intent.getString("uid_usuario");
         correo_usuario_R = intent.getString("correo_usuario");
         fecha_registro_R = intent.getString("fecha_registro");
         titulo_R = intent.getString("titulo");
         descripcion_R = intent.getString("descripcion");
-        fecha_R = intent.getString("fecha_nota");
+        fecha_R = intent.getString("fecha_tarea");
         estado_R = intent.getString("estado");
 
 
@@ -111,7 +110,7 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
     }
 
     private void SetearDatos(){
-        Id_nota_A.setText(id_nota_R);
+        Id_tarea_A.setText(id_tarea_R);
         Uid_Usuario_A.setText(uid_usuario_R);
         Correo_usuario_A.setText(correo_usuario_R);
         Fecha_registro_A.setText(fecha_registro_R);
@@ -122,13 +121,13 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
 
     }
 
-    private void ComprobarEstadoNota(){
-        String estado_nota = Estado_A.getText().toString();
+    private void ComprobarEstadoTarea(){
+        String estado_tarea = Estado_A.getText().toString();
 
-        if (estado_nota.equals("No finalizado")){
+        if (estado_tarea.equals("No finalizado")){
             Tarea_No_Finalizada.setVisibility(View.VISIBLE);
         }
-        if (estado_nota.equals("Finalizado")){
+        if (estado_tarea.equals("Finalizado")){
             Tarea_Finalizada.setVisibility(View.VISIBLE);
         }
     }
@@ -140,7 +139,7 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
         mes = calendario.get(Calendar.MONTH);
         anio = calendario.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Actualizar_Nota.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Actualizar_Tarea.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int AnioSeleccionado, int MesSeleccionado, int DiaSeleccionado) {
 
@@ -178,14 +177,14 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
 
     private void Spinner_Estado(){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.Estados_nota, android.R.layout.simple_spinner_item);
+                R.array.Estadostarea, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner_estado.setAdapter(adapter);
         Spinner_estado.setOnItemSelectedListener(this);
 
     }
 
-    private void ActualizarNotaBD(){
+    private void ActualizarTareaBD(){
         String tituloActualizar = Titulo_A.getText().toString();
         String descripcionActualizar = Descripcion_A.getText().toString();
         String fechaActualizar = Fecha_A.getText().toString();
@@ -195,18 +194,18 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
         DatabaseReference databaseReference = firebaseDatabase.getReference("Usuarios");
 
         //Consulta
-        Query query = databaseReference.child(user.getUid()).child("Notas_Publicadas").orderByChild("id_nota").equalTo(id_nota_R);
+        Query query = databaseReference.child(user.getUid()).child("Tareas_Publicadas").orderByChild("id_tarea").equalTo(id_tarea_R);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     ds.getRef().child("titulo").setValue(tituloActualizar);
                     ds.getRef().child("descripcion").setValue(descripcionActualizar);
-                    ds.getRef().child("fecha_nota").setValue(fechaActualizar);
+                    ds.getRef().child("fecha_tarea").setValue(fechaActualizar);
                     ds.getRef().child("estado").setValue(estadoActualizar);
                 }
 
-                Toast.makeText(Actualizar_Nota.this, "Nota actualizada con éxito", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Actualizar_Tarea.this, "Tarea actualizada con éxito", Toast.LENGTH_SHORT).show();
                 onBackPressed();
 
             }
@@ -248,9 +247,9 @@ public class Actualizar_Nota extends ToolBarActivity implements AdapterView.OnIt
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Actualizar_Nota_BD) {
-            ActualizarNotaBD();
-            //Toast.makeText(this, "Nota actualizada", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.Actualizar_tarea_BD) {
+            ActualizarTareaBD();
+            //Toast.makeText(this, "Tarea actualizada", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

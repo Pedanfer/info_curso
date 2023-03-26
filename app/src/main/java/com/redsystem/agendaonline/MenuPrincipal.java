@@ -37,10 +37,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.redsystem.agendaonline.Configuracion.Configuracion;
-import com.redsystem.agendaonline.Notas.Agregar_Nota;
+import com.redsystem.agendaonline.Tareas.Agregar_Tarea;
 import com.redsystem.agendaonline.Contactos.Listar_Contactos;
-import com.redsystem.agendaonline.Notas.Listar_Notas;
-import com.redsystem.agendaonline.Notas.Notas_Importantes;
+import com.redsystem.agendaonline.Tareas.Listar_Tareas;
+import com.redsystem.agendaonline.Tareas.Tareas_Importantes;
 import com.redsystem.agendaonline.Objetos.DrawerItemViewModel;
 import com.redsystem.agendaonline.Perfil.Perfil_Usuario;
 
@@ -56,7 +56,7 @@ public class MenuPrincipal extends ToolBarActivity {
     private CharSequence mTitle;
     ActionBarDrawerToggle mDrawerToggle;
 
-    Button AgregarNotas, ListarNotas, Importantes;
+    Button AgregarTareas, ListarTareas, Importantes;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
@@ -98,8 +98,8 @@ public class MenuPrincipal extends ToolBarActivity {
 
         Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
 
-        AgregarNotas = findViewById(R.id.AgregarNotas);
-        ListarNotas = findViewById(R.id.ListarNotas);
+        AgregarTareas = findViewById(R.id.AgregarTareas);
+        ListarTareas = findViewById(R.id.ListarTareas);
         Importantes = findViewById(R.id.Importantes);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -119,7 +119,7 @@ public class MenuPrincipal extends ToolBarActivity {
             }
         });
 
-        AgregarNotas.setOnClickListener(new View.OnClickListener() {
+        AgregarTareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -128,7 +128,7 @@ public class MenuPrincipal extends ToolBarActivity {
                 String correo_usuario = CorreoPrincipal.getText().toString();
 
                 /*Pasamos datos a la siguiente actividad*/
-                Intent intent = new Intent(MenuPrincipal.this, Agregar_Nota.class);
+                Intent intent = new Intent(MenuPrincipal.this, Agregar_Tarea.class);
                 intent.putExtra("Uid", uid_usuario);
                 intent.putExtra("Correo", correo_usuario);
                 startActivity(intent);
@@ -136,19 +136,19 @@ public class MenuPrincipal extends ToolBarActivity {
             }
         });
 
-        ListarNotas.setOnClickListener(new View.OnClickListener() {
+        ListarTareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuPrincipal.this, Listar_Notas.class));
-                Toast.makeText(MenuPrincipal.this, "Listar Notas", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MenuPrincipal.this, Listar_Tareas.class));
+                Toast.makeText(MenuPrincipal.this, "Listar Tareas", Toast.LENGTH_SHORT).show();
             }
         });
 
         Importantes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuPrincipal.this, Notas_Importantes.class));
-                Toast.makeText(MenuPrincipal.this, "Notas Archivadas", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MenuPrincipal.this, Tareas_Importantes.class));
+                Toast.makeText(MenuPrincipal.this, "Tareas Archivadas", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -365,8 +365,8 @@ public class MenuPrincipal extends ToolBarActivity {
                     CorreoPrincipal.setText(correo);
 
                     //Habilitar los botones del menú
-                    AgregarNotas.setEnabled(true);
-                    ListarNotas.setEnabled(true);
+                    AgregarTareas.setEnabled(true);
+                    ListarTareas.setEnabled(true);
                     Importantes.setEnabled(true);
 
                 }

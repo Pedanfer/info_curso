@@ -38,13 +38,13 @@
             android:name=".Perfil.Editar_imagen_perfil"
             android:exported="true" />
         <activity
-            android:name=".Notas.Detalle_Nota"
+            android:name=".Tareas.Detalle_Tarea"
             android:exported="true" />
-        <activity android:name=".Notas.Actualizar_Nota" />
+        <activity android:name=".Tareas.Actualizar_Tarea" />
         <activity android:name=".Perfil.Perfil_Usuario" />
-        <activity android:name=".Notas.Notas_Importantes" />
-        <activity android:name=".Notas.Listar_Notas" />
-        <activity android:name=".Notas.Agregar_Nota" />
+        <activity android:name=".Tareas.Tareas_Importantes" />
+        <activity android:name=".Tareas.Listar_Tareas" />
+        <activity android:name=".Tareas.Agregar_Tarea" />
         <activity
             android:name=".MenuPrincipal"
             android:exported="true" />

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Notas.Actualizar_Nota">
+    tools:context=".Tareas.Actualizar_Tarea">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
 
         <!--ID NOTA-->
         <TextView
-            android:id="@+id/Id_nota_A"
-            android:text="@string/Id_nota_A"
+            android:id="@+id/Id_tarea_A"
+            android:text="@string/Id_tarea_A"
             android:textSize="18sp"
             android:visibility="gone"
             android:fontFamily="@font/worksans"

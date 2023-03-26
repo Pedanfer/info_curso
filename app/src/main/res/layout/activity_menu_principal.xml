@@ -196,13 +196,13 @@
                             android:src="@drawable/agregar" />
 
                         <Button
-                            android:id="@+id/AgregarNotas"
+                            android:id="@+id/AgregarTareas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:enabled="false"
                             android:fontFamily="@font/worksans"
-                            android:text="@string/AgregarNotas" />
+                            android:text="@string/AgregarTareas" />
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -222,13 +222,13 @@
                             android:src="@drawable/lista" />
 
                         <Button
-                            android:id="@+id/ListarNotas"
+                            android:id="@+id/ListarTareas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:enabled="false"
                             android:fontFamily="@font/worksans"
-                            android:text="@string/ListarNotas" />
+                            android:text="@string/ListarTareas" />
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,31 +1,31 @@
 package com.redsystem.agendaonline.Objetos;
 
-public class Nota {
+public class Tarea {
 
     //Atributos con los que contará una NOTA
-    String id_nota, uid_usuario, correo_usuario, fecha_hora_actual, titulo, descripcion, fecha_nota, estado;
+    String id_tarea, uid_usuario, correo_usuario, fecha_hora_actual, titulo, descripcion, fecha_tarea, estado;
 
-    public Nota() {
+    public Tarea() {
 
     }
 
-    public Nota(String id_nota, String uid_usuario, String correo_usuario, String fecha_hora_actual, String titulo, String descripcion, String fecha_nota, String estado) {
-        this.id_nota = id_nota;
+    public Tarea(String id_tarea, String uid_usuario, String correo_usuario, String fecha_hora_actual, String titulo, String descripcion, String fecha_tarea, String estado) {
+        this.id_tarea = id_tarea;
         this.uid_usuario = uid_usuario;
         this.correo_usuario = correo_usuario;
         this.fecha_hora_actual = fecha_hora_actual;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.fecha_nota = fecha_nota;
+        this.fecha_tarea = fecha_tarea;
         this.estado = estado;
     }
 
-    public String getId_nota() {
-        return id_nota;
+    public String getId_tarea() {
+        return id_tarea;
     }
 
-    public void setId_nota(String id_nota) {
-        this.id_nota = id_nota;
+    public void setId_tarea(String id_tarea) {
+        this.id_tarea = id_tarea;
     }
 
     public String getUid_usuario() {
@@ -68,12 +68,12 @@ public class Nota {
         this.descripcion = descripcion;
     }
 
-    public String getFecha_nota() {
-        return fecha_nota;
+    public String getFecha_tarea() {
+        return fecha_tarea;
     }
 
-    public void setFecha_nota(String fecha_nota) {
-        this.fecha_nota = fecha_nota;
+    public void setFecha_tarea(String fecha_tarea) {
+        this.fecha_tarea = fecha_tarea;
     }
 
     public String getEstado() {

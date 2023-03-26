@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/Todas_notas"
-        android:text="@string/Todas_notas"
+        android:id="@+id/Todas_Tareas"
+        android:text="@string/Todas_Tareas"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/worksans"
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/Notas_Finalizadas"
-        android:text="@string/Notas_Finalizadas"
+        android:id="@+id/Tareas_Finalizadas"
+        android:text="@string/Tareas_Finalizadas"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/worksans"
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/Notas_No_Finalizadas"
-        android:text="@string/Notas_No_Finalizadas"
+        android:id="@+id/Tareas_No_Finalizadas"
+        android:text="@string/Tareas_No_Finalizadas"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/worksans"

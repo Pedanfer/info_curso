@@ -25,7 +25,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:src="@drawable/icono_item_nota_importante"/>
+                android:src="@drawable/icono_item_tarea_importante"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -35,10 +35,10 @@
             android:orientation="vertical"
             android:layout_marginStart="7dp">
 
-            <!--id de nota-->
+            <!--id de tarea-->
             <TextView
-                android:id="@+id/Id_nota_Item_I"
-                android:text="@string/Id_nota_Item_I"
+                android:id="@+id/Id_tarea_Item_I"
+                android:text="@string/Id_tarea_Item_I"
                 android:visibility="gone"
                 android:fontFamily="@font/worksans"
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!--Titulo de la nota-->
+            <!--Titulo de la tarea-->
             <TextView
                 android:id="@+id/Titulo_Item_I"
                 android:text="@string/Titulo_Item_I"
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!--Descripción de la nota-->
+            <!--Descripción de la tarea-->
             <TextView
                 android:id="@+id/Descripcion_Item_I"
                 android:text="@string/Descripcion_Item_I"
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"/>
 
-            <!--Fecha de la nota-->
+            <!--Fecha de la tarea-->
             <TextView
                 android:id="@+id/Fecha_Item_I"
                 android:text="@string/Fecha_Item_I"
@@ -125,7 +125,7 @@
                     android:background="#E74C3C"/>
 
 
-                <!--Estado de la nota-->
+                <!--Estado de la tarea-->
                 <TextView
                     android:id="@+id/Estado_Item_I"
                     android:text="@string/Estado_Item_I"
