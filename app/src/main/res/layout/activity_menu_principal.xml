@@ -1,273 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MenuPrincipal">
+        android:gravity="top"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:padding="0.2dp"
-                app:cardBackgroundColor="#5499c7"
-                app:cardCornerRadius="5dp"
-                app:cardUseCompatPadding="true">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="2dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/imagen_perfil_usuario" />
-
-                    <!--DATOS-->
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/worksans"
-                            android:text="@string/BienvenidoPrincipal"
-                            android:textColor="#fff"
-                            android:textSize="20sp" />
-
-                        <ProgressBar
-                            android:id="@+id/progressBarDatos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp" />
-
-                        <!--UID-->
-                        <TextView
-                            android:id="@+id/UidPrincipal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/worksans"
-                            android:text="@string/UidPrincipal"
-                            android:textColor="#fff"
-                            android:textSize="15sp"
-                            android:visibility="gone" />
-
-                        <!--NOMBRES-->
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/Linear_Nombres"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <!--ICONO-->
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/nombre_menu" />
-
-                            <!--NOMBRES-->
-                            <TextView
-                                android:id="@+id/NombresPrincipal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="3dp"
-                                android:fontFamily="@font/worksans"
-                                android:text="@string/NombresPrincipal"
-                                android:textColor="#fff"
-                                android:textSize="17sp" />
-
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <!--CORREO-->
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/Linear_Correo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <!--ICONO-->
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/correo_menu" />
-
-                            <!---CORREO-->
-                            <TextView
-                                android:id="@+id/CorreoPrincipal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="3dp"
-                                android:fontFamily="@font/worksans"
-                                android:text="@string/CorreoPrincipal"
-                                android:textColor="#fff"
-                                android:textSize="17sp" />
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <!--VERIFICACIÓN-->
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/Linear_Verficacion"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <!--ICONO-->
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/verificacion_principal" />
-
-                            <!---ESTADO-->
-                            <Button
-                                android:id="@+id/EstadoCuentaPrincipal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="3dp"
-                                android:backgroundTint="#607d8b"
-                                android:fontFamily="@font/worksans"
-                                android:text="@string/EstadoCuentaPrincipal"
-                                android:textColor="#fff"
-                                android:textSize="17sp" />
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            </androidx.cardview.widget.CardView>
+            android:layout_height="180dp"
+            android:padding="0.2dp"
+            app:cardBackgroundColor="#5499c7"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
-                <!--1 - 2-->
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <ProgressBar
+                    android:id="@+id/progressBarDatos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp" />
 
-                    <!--OPCION 1-->
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="90dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
+                    <!--Imagen de perfil-->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/profile_pic_main"
+                        android:layout_width="90dp"
+                        android:layout_height="120dp"
+                        android:background="#ffffff"
+                        android:foreground="@drawable/profile_photo_border" />
+                </androidx.cardview.widget.CardView>
+
+                <!--DATOS-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:fontFamily="@font/worksans"
+                        android:text="@string/BienvenidoPrincipal"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
 
+                    <!--NOMBRES-->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/Linear_Nombres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!--ICONO-->
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/agregar" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/nombre_menu" />
 
-                        <Button
-                            android:id="@+id/AgregarTareas"
-                            android:layout_width="match_parent"
+                        <!--NOMBRES-->
+                        <TextView
+                            android:id="@+id/NombresPrincipal"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:enabled="false"
+                            android:layout_marginStart="3dp"
                             android:fontFamily="@font/worksans"
-                            android:text="@string/AgregarTareas" />
+                            android:text="@string/NombresPrincipal"
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <!--OPCION 2-->
+                    <!--CORREO-->
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:id="@+id/Linear_Correo"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
+                        <!--ICONO-->
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/lista" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/correo_menu" />
 
-                        <Button
-                            android:id="@+id/ListarTareas"
-                            android:layout_width="match_parent"
+                        <!---CORREO-->
+                        <TextView
+                            android:id="@+id/CorreoPrincipal"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:enabled="false"
+                            android:layout_marginStart="3dp"
                             android:fontFamily="@font/worksans"
-                            android:text="@string/ListarTareas" />
-
+                            android:text="@string/CorreoPrincipal"
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <!--VERIFICACIÓN-->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/Linear_Verficacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!--ICONO-->
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/verificacion_principal" />
+
+                        <!---ESTADO-->
+                        <Button
+                            android:id="@+id/EstadoCuentaPrincipal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:backgroundTint="#607d8b"
+                            android:fontFamily="@font/worksans"
+                            android:text="@string/EstadoCuentaPrincipal"
+                            android:textColor="#fff"
+                            android:textSize="16sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <!--3 - 4-->
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--1 - 2-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!--OPCION 1-->
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <!--OPCION 3-->
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/agregar" />
+
+                    <Button
+                        android:id="@+id/AgregarTareas"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/archivados" />
-
-                        <Button
-                            android:id="@+id/Importantes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:enabled="false"
-                            android:fontFamily="@font/worksans"
-                            android:text="@string/Importantes" />
+                        android:layout_marginTop="10dp"
+                        android:enabled="false"
+                        android:fontFamily="@font/worksans"
+                        android:text="@string/AgregarTareas" />
 
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!--OPCION 2-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/lista" />
+
+                    <Button
+                        android:id="@+id/ListarTareas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:enabled="false"
+                        android:fontFamily="@font/worksans"
+                        android:text="@string/ListarTareas" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--3 - 4-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!--OPCION 3-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/archivados" />
+
+                    <Button
+                        android:id="@+id/Importantes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:enabled="false"
+                        android:fontFamily="@font/worksans"
+                        android:text="@string/Importantes" />
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -275,7 +264,20 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </ScrollView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="160dp"
+            android:background="@color/bottom_tab"
+            app:itemBackground="@color/bottom_tab"
+            app:itemIconTint="@drawable/bottom_tab_selector"
+            app:itemTextColor="@drawable/bottom_tab_selector"
+            app:menu="@menu/bottom_menu" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <ListView
         android:id="@+id/left_drawer"
@@ -286,4 +288,5 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

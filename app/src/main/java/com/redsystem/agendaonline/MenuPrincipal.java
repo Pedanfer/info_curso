@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class MenuPrincipal extends ToolBarActivity {
     private ListView mDrawerList;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+
+    private ImageView profilePic;
     ActionBarDrawerToggle mDrawerToggle;
 
     Button AgregarTareas, ListarTareas, Importantes;
@@ -79,11 +82,13 @@ public class MenuPrincipal extends ToolBarActivity {
         // Drawer code
         initializeDrawer();
 
-        UidPrincipal = findViewById(R.id.UidPrincipal);
         NombresPrincipal = findViewById(R.id.NombresPrincipal);
         CorreoPrincipal = findViewById(R.id.CorreoPrincipal);
         EstadoCuentaPrincipal = findViewById(R.id.EstadoCuentaPrincipal);
         progressBarDatos = findViewById(R.id.progressBarDatos);
+        profilePic = findViewById(R.id.profile_pic_main);
+
+        Perfil_Usuario.getUserImageInto(profilePic, this);
 
         dialog_cuenta_verificada = new Dialog(this);
         dialog_informacion = new Dialog(this);
@@ -359,8 +364,6 @@ public class MenuPrincipal extends ToolBarActivity {
                     String nombres = "" + snapshot.child("nombres").getValue();
                     String correo = "" + snapshot.child("correo").getValue();
 
-                    //Setear los datos en los respectivos TextView
-                    UidPrincipal.setText(uid);
                     NombresPrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
 

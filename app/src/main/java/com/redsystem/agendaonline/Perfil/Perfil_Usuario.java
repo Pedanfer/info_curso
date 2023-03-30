@@ -5,10 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,7 +59,7 @@ public class Perfil_Usuario extends ToolBarActivity {
 
     Dialog dialog_establecer_telefono;
 
-    int dia, mes , anio;
+    int dia, mes, anio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class Perfil_Usuario extends ToolBarActivity {
 
     }
 
-    private void InicializarVariables(){
+    private void InicializarVariables() {
         Imagen_Perfil = findViewById(R.id.Imagen_Perfil);
         Correo_Perfil = findViewById(R.id.Correo_Perfil);
         Nombres_Perfil = findViewById(R.id.Nombres_Perfil);
@@ -125,23 +128,23 @@ public class Perfil_Usuario extends ToolBarActivity {
         Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
     }
 
-    private void LecturaDeDatos(){
+    private void LecturaDeDatos() {
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     //Obtener sus datos
-                    String uid = ""+snapshot.child("uid").getValue();
-                    String nombre = ""+snapshot.child("nombres").getValue();
-                    String apellidos = ""+snapshot.child("apellidos").getValue();
-                    String correo = ""+snapshot.child("correo").getValue();
-                    String edad = ""+snapshot.child("edad").getValue();
-                    String telefono = ""+snapshot.child("telefono").getValue();
-                    String domicilio = ""+snapshot.child("domicilio").getValue();
-                    String universidad = ""+snapshot.child("universidad").getValue();
-                    String profesion = ""+snapshot.child("profesion").getValue();
-                    String fecha_nacimiento = ""+snapshot.child("fecha_de_nacimiento").getValue();
-                    String imagen_perfil = ""+snapshot.child("imagen_perfil").getValue();
+                    String uid = "" + snapshot.child("uid").getValue();
+                    String nombre = "" + snapshot.child("nombres").getValue();
+                    String apellidos = "" + snapshot.child("apellidos").getValue();
+                    String correo = "" + snapshot.child("correo").getValue();
+                    String edad = "" + snapshot.child("edad").getValue();
+                    String telefono = "" + snapshot.child("telefono").getValue();
+                    String domicilio = "" + snapshot.child("domicilio").getValue();
+                    String universidad = "" + snapshot.child("universidad").getValue();
+                    String profesion = "" + snapshot.child("profesion").getValue();
+                    String fecha_nacimiento = "" + snapshot.child("fecha_de_nacimiento").getValue();
+                    String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
 
                     Nombres_Perfil.setText(nombre);
                     Apellidos_Perfil.setText(apellidos);
@@ -155,15 +158,14 @@ public class Perfil_Usuario extends ToolBarActivity {
 
                     Cargar_Imagen(imagen_perfil);
 
-                }
-                else {
+                } else {
                     Toast.makeText(Perfil_Usuario.this, "Esperando datos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Perfil_Usuario.this, ""+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Perfil_Usuario.this, "" + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -172,8 +174,7 @@ public class Perfil_Usuario extends ToolBarActivity {
         try {
             /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
             Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.placeholder).into(Imagen_Perfil);
-
-        }catch (Exception e){
+        } catch (Exception e) {
             /*Si la imagen no fue traida con éxito*/
             Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
 
@@ -181,7 +182,30 @@ public class Perfil_Usuario extends ToolBarActivity {
         Editar_imagen.setElevation(11);
     }
 
-    private void Establecer_telefono_usuario(){
+    public static void getUserImageInto(ImageView view, Activity activity) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        DatabaseReference Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
+        Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    //Obtener sus datos
+                    String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+
+                    Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+
+    }
+
+    private void Establecer_telefono_usuario() {
         CountryCodePicker ccp;
         EditText Establecer_Telefono;
         Button Btn_Aceptar_Telefono;
@@ -197,12 +221,12 @@ public class Perfil_Usuario extends ToolBarActivity {
             public void onClick(View v) {
                 String codigo_pais = ccp.getSelectedCountryCodeWithPlus();
                 String telefono = Establecer_Telefono.getText().toString();
-                String codigo_pais_telefono = codigo_pais+telefono; //+51956605043
+                String codigo_pais_telefono = codigo_pais + telefono; //+51956605043
 
-                if (!telefono.equals("")){
+                if (!telefono.equals("")) {
                     Telefono_Perfil.setText(codigo_pais_telefono);
                     dialog_establecer_telefono.dismiss();
-                }else {
+                } else {
                     Toast.makeText(Perfil_Usuario.this, "Ingrese un número telefónico", Toast.LENGTH_SHORT).show();
                     dialog_establecer_telefono.dismiss();
                 }
@@ -213,7 +237,7 @@ public class Perfil_Usuario extends ToolBarActivity {
         dialog_establecer_telefono.setCanceledOnTouchOutside(true);
     }
 
-    private void Abrir_Calendario(){
+    private void Abrir_Calendario() {
         final Calendar calendario = Calendar.getInstance();
 
         dia = calendario.get(Calendar.DAY_OF_MONTH);
@@ -227,10 +251,10 @@ public class Perfil_Usuario extends ToolBarActivity {
                 String diaFormateado, mesFormateado;
 
                 //OBTENER DIA
-                if (DiaSeleccionado < 10){
-                    diaFormateado = "0"+String.valueOf(DiaSeleccionado);
+                if (DiaSeleccionado < 10) {
+                    diaFormateado = "0" + String.valueOf(DiaSeleccionado);
                     // Antes: 9/11/2022 -  Ahora 09/11/2022
-                }else {
+                } else {
                     diaFormateado = String.valueOf(DiaSeleccionado);
                     //Ejemplo 13/08/2022
                 }
@@ -238,25 +262,25 @@ public class Perfil_Usuario extends ToolBarActivity {
                 //OBTENER EL MES
                 int Mes = MesSeleccionado + 1;
 
-                if (Mes < 10){
-                    mesFormateado = "0"+String.valueOf(Mes);
+                if (Mes < 10) {
+                    mesFormateado = "0" + String.valueOf(Mes);
                     // Antes: 09/8/2022 -  Ahora 09/08/2022
-                }else {
+                } else {
                     mesFormateado = String.valueOf(Mes);
                     //Ejemplo 13/10/2022 - 13/11/2022 - 13/12/2022
 
                 }
 
                 //Setear fecha en TextView
-                Fecha_Nacimiento_Perfil.setText(diaFormateado + "/" + mesFormateado + "/"+ AnioSeleccionado);
+                Fecha_Nacimiento_Perfil.setText(diaFormateado + "/" + mesFormateado + "/" + AnioSeleccionado);
 
             }
         }
-                ,anio,mes,dia);
+                , anio, mes, dia);
         datePickerDialog.show();
     }
 
-    private void ActualizarDatos(){
+    private void ActualizarDatos() {
 
         String A_Nombre = Nombres_Perfil.getText().toString().trim();
         String A_Apellidos = Apellidos_Perfil.getText().toString().trim();
@@ -285,11 +309,11 @@ public class Perfil_Usuario extends ToolBarActivity {
                         Toast.makeText(Perfil_Usuario.this, "Actualizado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Perfil_Usuario.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Perfil_Usuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -301,16 +325,16 @@ public class Perfil_Usuario extends ToolBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Actualizar_pass){
+        if (item.getItemId() == R.id.Actualizar_pass) {
             startActivity(new Intent(Perfil_Usuario.this, ActualizarPassUsuario.class));
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void ComprobarInicioSesion(){
-        if (user!=null){
+    private void ComprobarInicioSesion() {
+        if (user != null) {
             LecturaDeDatos();
-        }else {
+        } else {
             startActivity(new Intent(Perfil_Usuario.this, MenuPrincipal.class));
             finish();
         }
