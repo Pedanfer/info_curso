@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/dashboard"
-        android:title="Mis tareas"
-        android:icon="@drawable/checklist_black"/>
+        android:id="@+id/tasks"
+        android:title="Tareas"
+        android:icon="@drawable/tasks"/>
     <item
-        android:id="@+id/home"
-        android:title="Añadir"
-        android:icon="@drawable/add_task_black"/>
+        android:id="@+id/contacts"
+        android:title="Contactos"
+        android:icon="@drawable/contacts"/>
 </menu>

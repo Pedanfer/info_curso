@@ -33,7 +33,7 @@
                 android:layout_height="140dp"
                 app:cardCornerRadius="10dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="110dp"
                 android:elevation="10dp">
                 <!--Imagen de perfil-->
                 <androidx.appcompat.widget.AppCompatImageView
@@ -49,9 +49,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/Editar_imagen"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="100dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="115dp"
                 android:layout_marginTop="230dp"
                 android:src="@drawable/edit_image" />
 

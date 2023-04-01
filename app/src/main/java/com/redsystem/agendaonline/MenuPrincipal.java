@@ -7,7 +7,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,8 +63,6 @@ public class MenuPrincipal extends ToolBarActivity {
 
     private ImageView profilePic;
     ActionBarDrawerToggle mDrawerToggle;
-
-    Button AgregarTareas, ListarTareas, Importantes;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
@@ -79,8 +82,24 @@ public class MenuPrincipal extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_menu_principal);
 
-        // Drawer code
         initializeDrawer();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.tasks);
+        setFragmentListarTareas();
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.tasks:
+                    setFragmentListarTareas();
+                    return true;
+                case R.id.contacts:
+                    setFragmentListarContactos();
+                    return true;
+            }
+            return false;
+        });
 
         NombresPrincipal = findViewById(R.id.NombresPrincipal);
         CorreoPrincipal = findViewById(R.id.CorreoPrincipal);
@@ -103,57 +122,24 @@ public class MenuPrincipal extends ToolBarActivity {
 
         Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
 
-        AgregarTareas = findViewById(R.id.AgregarTareas);
-        ListarTareas = findViewById(R.id.ListarTareas);
-        Importantes = findViewById(R.id.Importantes);
-
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        EstadoCuentaPrincipal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (user.isEmailVerified()) {
-                    //Si la cuenta está verificada
-                    //Toast.makeText(MenuPrincipal.this, "Cuenta ya verificada", Toast.LENGTH_SHORT).show();
-                    AnimacionCuentaVerificada();
-                } else {
-                    //Si la cuenta no está verificada
-                    VerificarCuentaCorreo();
-                }
-            }
+        CardView profileCard = findViewById(R.id.profile_card);
+
+        profileCard.setOnClickListener(v -> {
+            startActivity(new Intent(MenuPrincipal.this, Perfil_Usuario.class));
         });
 
-        AgregarTareas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        ImageButton closeButton = findViewById(R.id.closeButton);
 
-                /*Obtenemos la información de los TextView*/
-                String uid_usuario = UidPrincipal.getText().toString();
-                String correo_usuario = CorreoPrincipal.getText().toString();
+        closeButton.setOnClickListener((View.OnClickListener) v -> profileCard.setVisibility(View.GONE));
 
-                /*Pasamos datos a la siguiente actividad*/
-                Intent intent = new Intent(MenuPrincipal.this, Agregar_Tarea.class);
-                intent.putExtra("Uid", uid_usuario);
-                intent.putExtra("Correo", correo_usuario);
-                startActivity(intent);
-
-            }
-        });
-
-        ListarTareas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuPrincipal.this, Listar_Tareas.class));
-                Toast.makeText(MenuPrincipal.this, "Listar Tareas", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Importantes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuPrincipal.this, Tareas_Importantes.class));
-                Toast.makeText(MenuPrincipal.this, "Tareas Archivadas", Toast.LENGTH_SHORT).show();
+        EstadoCuentaPrincipal.setOnClickListener(view -> {
+            if (user.isEmailVerified()) {
+                AnimacionCuentaVerificada();
+            } else {
+                VerificarCuentaCorreo();
             }
         });
     }
@@ -167,6 +153,18 @@ public class MenuPrincipal extends ToolBarActivity {
 
     }
 
+    private void setFragmentListarTareas() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new Listar_Tareas())
+                .commit();
+    }
+
+    private void setFragmentListarContactos() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new Listar_Contactos())
+                .commit();
+    }
+
     private void selectItem(int position) {
         mDrawerList.setItemChecked(position, false);
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -176,16 +174,9 @@ public class MenuPrincipal extends ToolBarActivity {
                 startActivity(new Intent(MenuPrincipal.this, Perfil_Usuario.class));
                 break;
             case 1:
-                String uid_usuario = UidPrincipal.getText().toString();
-                Intent intent = new Intent(MenuPrincipal.this, Listar_Contactos.class);
-                /*Enviamos el dato a la siguiente actividad*/
-                intent.putExtra("Uid", uid_usuario);
-                startActivity(intent);
-                break;
-            case 2:
                 Informacion();
                 break;
-            case 3:
+            case 2:
                 SalirAplicacion();
                 break;
             default:
@@ -202,11 +193,10 @@ public class MenuPrincipal extends ToolBarActivity {
         List<DrawerItemViewModel> drawerItems = new ArrayList<DrawerItemViewModel>();
 
         drawerItems.add(new DrawerItemViewModel(R.drawable.icono_perfil_usuario, "Perfil"));
-        drawerItems.add(new DrawerItemViewModel(R.drawable.agregar_contacto_bd, "Contactos"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.acerca_de, "Acerca de"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.salir, "Salir"));
 
-        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[4]));
+        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]));
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -340,38 +330,22 @@ public class MenuPrincipal extends ToolBarActivity {
     }
 
     private void CargaDeDatos() {
-
         VerificarEstadoDeCuenta();
 
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                //Si el usuario existe
                 if (snapshot.exists()) {
-                    //El progressbar se oculta
                     progressBarDatos.setVisibility(View.GONE);
-                    //Los TextView se muestran
-                    //UidPrincipal.setVisibility(View.VISIBLE);
-                    //NombresPrincipal.setVisibility(View.VISIBLE);
-                    //CorreoPrincipal.setVisibility(View.VISIBLE);
                     Linear_Nombres.setVisibility(View.VISIBLE);
                     Linear_Correo.setVisibility(View.VISIBLE);
                     Linear_Verificacion.setVisibility(View.VISIBLE);
 
-                    //Obtener los datos
-                    String uid = "" + snapshot.child("uid").getValue();
                     String nombres = "" + snapshot.child("nombres").getValue();
                     String correo = "" + snapshot.child("correo").getValue();
 
                     NombresPrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
-
-                    //Habilitar los botones del menú
-                    AgregarTareas.setEnabled(true);
-                    ListarTareas.setEnabled(true);
-                    Importantes.setEnabled(true);
-
                 }
             }
 
@@ -396,9 +370,7 @@ public class MenuPrincipal extends ToolBarActivity {
         }
 
         if (item.getItemId() == R.id.Configuracion) {
-            String uid_usuario = UidPrincipal.getText().toString();
             Intent intent = new Intent(MenuPrincipal.this, Configuracion.class);
-            intent.putExtra("Uid", uid_usuario);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

@@ -177,7 +177,6 @@ public class Perfil_Usuario extends ToolBarActivity {
         } catch (Exception e) {
             /*Si la imagen no fue traida con éxito*/
             Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
-
         }
         Editar_imagen.setElevation(11);
     }
@@ -190,9 +189,7 @@ public class Perfil_Usuario extends ToolBarActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    //Obtener sus datos
                     String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
-
                     Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
                 }
             }

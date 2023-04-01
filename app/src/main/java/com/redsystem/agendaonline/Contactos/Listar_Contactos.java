@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,7 @@ import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 import com.redsystem.agendaonline.ViewHolder.ViewHolderContacto;
 
-public class Listar_Contactos extends ToolBarActivity {
+public class Listar_Contactos extends Fragment {
 
     RecyclerView recyclerViewContactos;
     FirebaseDatabase firebaseDatabase;
@@ -52,27 +53,24 @@ public class Listar_Contactos extends ToolBarActivity {
     Dialog dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildContentView(R.layout.activity_listar_contactos);
 
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("Mis contactos");
-
-
-        recyclerViewContactos = findViewById(R.id.recyclerViewContactos);
+        View view = inflater.inflate(R.layout.activity_listar_contactos, container, false);
+        recyclerViewContactos = view.findViewById(R.id.recyclerViewContactos);
         recyclerViewContactos.setHasFixedSize(true);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
 
-        dialog = new Dialog(Listar_Contactos.this);
+        dialog = new Dialog(getActivity());
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
         ListarContactos();
+        return view;
     }
 
     private void ListarContactos(){
@@ -82,7 +80,7 @@ public class Listar_Contactos extends ToolBarActivity {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolderContacto viewHolderContacto, int position, @NonNull Contacto contacto) {
                 viewHolderContacto.SetearDatosContacto(
-                        getApplicationContext(),
+                        getContext(),
                         contacto.getId_contacto(),
                         contacto.getUid_contacto(),
                         contacto.getNombres(),
@@ -104,7 +102,7 @@ public class Listar_Contactos extends ToolBarActivity {
                 viewHolderContacto.setOnClickListener(new ViewHolderContacto.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        //Toast.makeText(Listar_Contactos.this, "On item click", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "On item click", Toast.LENGTH_SHORT).show();
                         //Obteniendo los datos del contacto seleccionado
                         String id_c = getItem(position).getId_contacto();
                         String uid_usuario = getItem(position).getUid_contacto();
@@ -117,7 +115,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         String imagen_c = getItem(position).getImagen();
 
                         //Enviar los datos a la siguiente actividad
-                        Intent intent = new Intent(Listar_Contactos.this, Detalle_contacto.class);
+                        Intent intent = new Intent(getActivity(), Detalle_contacto.class);
                         intent.putExtra("id_c", id_c);
                         intent.putExtra("uid_usuario", uid_usuario);
                         intent.putExtra("nombres_c", nombres_c);
@@ -142,7 +140,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         String direccion_c = getItem(position).getDireccion();
                         String imagen_c = getItem(position).getImagen();
 
-                        //Toast.makeText(Listar_Contactos.this, "On item long click", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "On item long click", Toast.LENGTH_SHORT).show();
                         Button Btn_Eliminar_C, Btn_Actualizar_C;
 
                         dialog.setContentView(R.layout.cuadro_dialogo_opciones_contacto);
@@ -153,7 +151,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         Btn_Eliminar_C.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //Toast.makeText(Listar_Contactos.this, "Eliminar contacto", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "Eliminar contacto", Toast.LENGTH_SHORT).show();
                                 EliminarContacto(id_c);
                                 dialog.dismiss();
                             }
@@ -162,7 +160,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         Btn_Actualizar_C.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(Listar_Contactos.this, Actualizar_Contacto.class);
+                                Intent intent = new Intent(getActivity(), Actualizar_Contacto.class);
                                 intent.putExtra("id_c", id_c);
                                 intent.putExtra("uid_usuario", uid_usuario);
                                 intent.putExtra("nombres_c", nombres_c);
@@ -184,7 +182,7 @@ public class Listar_Contactos extends ToolBarActivity {
             }
         };
 
-        recyclerViewContactos.setLayoutManager(new GridLayoutManager(Listar_Contactos.this, 2));
+        recyclerViewContactos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         firebaseRecyclerAdapter.startListening();
         recyclerViewContactos.setAdapter(firebaseRecyclerAdapter);
     }
@@ -196,7 +194,7 @@ public class Listar_Contactos extends ToolBarActivity {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolderContacto viewHolderContacto, int position, @NonNull Contacto contacto) {
                 viewHolderContacto.SetearDatosContacto(
-                        getApplicationContext(),
+                        getContext(),
                         contacto.getId_contacto(),
                         contacto.getUid_contacto(),
                         contacto.getNombres(),
@@ -218,7 +216,7 @@ public class Listar_Contactos extends ToolBarActivity {
                 viewHolderContacto.setOnClickListener(new ViewHolderContacto.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        //Toast.makeText(Listar_Contactos.this, "On item click", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "On item click", Toast.LENGTH_SHORT).show();
                         //Obteniendo los datos del contacto seleccionado
                         String id_c = getItem(position).getId_contacto();
                         String uid_usuario = getItem(position).getUid_contacto();
@@ -231,7 +229,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         String imagen_c = getItem(position).getImagen();
 
                         //Enviar los datos a la siguiente actividad
-                        Intent intent = new Intent(Listar_Contactos.this, Detalle_contacto.class);
+                        Intent intent = new Intent(getActivity(), Detalle_contacto.class);
                         intent.putExtra("id_c", id_c);
                         intent.putExtra("uid_usuario", uid_usuario);
                         intent.putExtra("nombres_c", nombres_c);
@@ -256,7 +254,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         String direccion_c = getItem(position).getDireccion();
                         String imagen_c = getItem(position).getImagen();
 
-                        //Toast.makeText(Listar_Contactos.this, "On item long click", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "On item long click", Toast.LENGTH_SHORT).show();
                         Button Btn_Eliminar_C, Btn_Actualizar_C;
 
                         dialog.setContentView(R.layout.cuadro_dialogo_opciones_contacto);
@@ -267,7 +265,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         Btn_Eliminar_C.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //Toast.makeText(Listar_Contactos.this, "Eliminar contacto", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "Eliminar contacto", Toast.LENGTH_SHORT).show();
                                 EliminarContacto(id_c);
                                 dialog.dismiss();
                             }
@@ -276,7 +274,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         Btn_Actualizar_C.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(Listar_Contactos.this, Actualizar_Contacto.class);
+                                Intent intent = new Intent(getActivity(), Actualizar_Contacto.class);
                                 intent.putExtra("id_c", id_c);
                                 intent.putExtra("uid_usuario", uid_usuario);
                                 intent.putExtra("nombres_c", nombres_c);
@@ -298,13 +296,13 @@ public class Listar_Contactos extends ToolBarActivity {
             }
         };
 
-        recyclerViewContactos.setLayoutManager(new GridLayoutManager(Listar_Contactos.this, 2));
+        recyclerViewContactos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         firebaseRecyclerAdapter.startListening();
         recyclerViewContactos.setAdapter(firebaseRecyclerAdapter);
     }
 
     private void EliminarContacto(String id_c) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Contactos.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Eliminar");
         builder.setMessage("¿Desea eliminar este contacto?");
 
@@ -318,12 +316,12 @@ public class Listar_Contactos extends ToolBarActivity {
                         for (DataSnapshot ds : snapshot.getChildren()){
                             ds.getRef().removeValue();
                         }
-                        Toast.makeText(Listar_Contactos.this, "Contacto eliminado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Contacto eliminado", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(Listar_Contactos.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -332,7 +330,7 @@ public class Listar_Contactos extends ToolBarActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Listar_Contactos.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -340,7 +338,7 @@ public class Listar_Contactos extends ToolBarActivity {
     }
 
     private void Vaciar_Registro_Contactos(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(Listar_Contactos.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Vaciar todos los contactos");
         builder.setMessage("¿Estás seguro(a) de eliminar todos los contactos?");
 
@@ -354,7 +352,7 @@ public class Listar_Contactos extends ToolBarActivity {
                         for (DataSnapshot ds : snapshot.getChildren()){
                             ds.getRef().removeValue();
                         }
-                        Toast.makeText(Listar_Contactos.this, "Todos los contactos se han eliminado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Todos los contactos se han eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -368,7 +366,7 @@ public class Listar_Contactos extends ToolBarActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Listar_Contactos.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -376,44 +374,44 @@ public class Listar_Contactos extends ToolBarActivity {
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         if (firebaseRecyclerAdapter!=null){
             firebaseRecyclerAdapter.startListening();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_agregar_contacto, menu);
-        MenuItem item = menu.findItem(R.id.Buscar_contactos);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                BuscarContactos(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                BuscarContactos(newText);
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_agregar_contacto, menu);
+//        MenuItem item = menu.findItem(R.id.Buscar_contactos);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                BuscarContactos(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                BuscarContactos(newText);
+//                return false;
+//            }
+//        });
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Agregar_contacto){
             /*Recuperamos el uid de la actividad anterior*/
-            String Uid_Recuperado = getIntent().getStringExtra("Uid");
-            Intent intent = new Intent(Listar_Contactos.this, Agregar_Contacto.class);
+            //String Uid_Recuperado = getIntent().getStringExtra("Uid");
+            Intent intent = new Intent(getActivity(), Agregar_Contacto.class);
             /*Enviamos el dato uid a la siguiente a actividad*/
-            intent.putExtra("Uid", Uid_Recuperado);
+            //intent.putExtra("Uid", Uid_Recuperado);
             startActivity(intent);
         }
         if (item.getItemId() == R.id.Vaciar_contactos){
@@ -422,9 +420,4 @@ public class Listar_Contactos extends ToolBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return super.onSupportNavigateUp();
-    }
 }
