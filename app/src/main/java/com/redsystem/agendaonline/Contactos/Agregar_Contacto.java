@@ -124,8 +124,7 @@ public class Agregar_Contacto extends ToolBarActivity {
 
     private void AgregarContacto(){
         /*Obtener los datos*/
-        String uid = Uid_Usuario_C.getText().toString();
-        String nombres = Nombres_C.getText().toString();
+        String nombre = Nombres_C.getText().toString();
         String apellidos = Apellidos_C.getText().toString();
         String correo = Correo_C.getText().toString();
         String telefono = Telefono_C.getText().toString();
@@ -136,12 +135,12 @@ public class Agregar_Contacto extends ToolBarActivity {
         String id_contacto = BD_Usuarios.push().getKey();
 
         /*Validar los datos*/
-        if (!uid.equals("") && !nombres.equals("")){
+        if (!nombre.equals("")){
 
             Contacto contacto = new Contacto(
                     id_contacto,
-                    uid,
-                    nombres,
+                    user.getUid(),
+                    nombre,
                     apellidos,
                     correo,
                     telefono,

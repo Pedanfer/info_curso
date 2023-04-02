@@ -1,10 +1,7 @@
 package com.redsystem.agendaonline.Contactos;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +10,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +19,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.FirebaseOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +30,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.redsystem.agendaonline.Objetos.Contacto;
 import com.redsystem.agendaonline.R;
-import com.redsystem.agendaonline.ToolBarActivity;
 import com.redsystem.agendaonline.ViewHolder.ViewHolderContacto;
 
 public class Listar_Contactos extends Fragment {
@@ -47,6 +40,8 @@ public class Listar_Contactos extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
+    FloatingActionButton addContact, removeAll;
+
     FirebaseRecyclerAdapter<Contacto, ViewHolderContacto> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Contacto> firebaseRecyclerOptions;
 
@@ -54,13 +49,18 @@ public class Listar_Contactos extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.activity_listar_contactos, container, false);
         recyclerViewContactos = view.findViewById(R.id.recyclerViewContactos);
         recyclerViewContactos.setHasFixedSize(true);
 
+        addContact = view.findViewById(R.id.fab_add);
+        removeAll = view.findViewById(R.id.fab_remove);
+
+        addContact.setOnClickListener(v -> startActivity(new Intent(getActivity(), Agregar_Contacto.class)));
+        removeAll.setOnClickListener(vi -> Vaciar_Registro_Contactos());
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
 
@@ -73,7 +73,7 @@ public class Listar_Contactos extends Fragment {
         return view;
     }
 
-    private void ListarContactos(){
+    private void ListarContactos() {
         Query query = BD_Usuarios.child(user.getUid()).child("Contactos").orderByChild("nombres");
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Contacto>().setQuery(query, Contacto.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Contacto, ViewHolderContacto>(firebaseRecyclerOptions) {
@@ -187,7 +187,7 @@ public class Listar_Contactos extends Fragment {
         recyclerViewContactos.setAdapter(firebaseRecyclerAdapter);
     }
 
-    private void BuscarContactos(String Nombre_Contacto){
+    private void BuscarContactos(String Nombre_Contacto) {
         Query query = BD_Usuarios.child(user.getUid()).child("Contactos").orderByChild("nombres").startAt(Nombre_Contacto).endAt(Nombre_Contacto + "\uf8ff");
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Contacto>().setQuery(query, Contacto.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Contacto, ViewHolderContacto>(firebaseRecyclerOptions) {
@@ -313,7 +313,7 @@ public class Listar_Contactos extends Fragment {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()){
+                        for (DataSnapshot ds : snapshot.getChildren()) {
                             ds.getRef().removeValue();
                         }
                         Toast.makeText(getActivity(), "Contacto eliminado", Toast.LENGTH_SHORT).show();
@@ -337,7 +337,7 @@ public class Listar_Contactos extends Fragment {
         builder.create().show();
     }
 
-    private void Vaciar_Registro_Contactos(){
+    private void Vaciar_Registro_Contactos() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Vaciar todos los contactos");
         builder.setMessage("¿Estás seguro(a) de eliminar todos los contactos?");
@@ -349,7 +349,7 @@ public class Listar_Contactos extends Fragment {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()){
+                        for (DataSnapshot ds : snapshot.getChildren()) {
                             ds.getRef().removeValue();
                         }
                         Toast.makeText(getActivity(), "Todos los contactos se han eliminado correctamente", Toast.LENGTH_SHORT).show();
@@ -376,7 +376,7 @@ public class Listar_Contactos extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (firebaseRecyclerAdapter!=null){
+        if (firebaseRecyclerAdapter != null) {
             firebaseRecyclerAdapter.startListening();
         }
     }
@@ -406,7 +406,7 @@ public class Listar_Contactos extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Agregar_contacto){
+        if (item.getItemId() == R.id.Agregar_contacto) {
             /*Recuperamos el uid de la actividad anterior*/
             //String Uid_Recuperado = getIntent().getStringExtra("Uid");
             Intent intent = new Intent(getActivity(), Agregar_Contacto.class);
@@ -414,7 +414,7 @@ public class Listar_Contactos extends Fragment {
             //intent.putExtra("Uid", Uid_Recuperado);
             startActivity(intent);
         }
-        if (item.getItemId() == R.id.Vaciar_contactos){
+        if (item.getItemId() == R.id.Vaciar_contactos) {
             Vaciar_Registro_Contactos();
         }
         return super.onOptionsItemSelected(item);
