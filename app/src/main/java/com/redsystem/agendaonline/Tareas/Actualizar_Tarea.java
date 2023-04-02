@@ -124,10 +124,10 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
     private void ComprobarEstadoTarea(){
         String estado_tarea = Estado_A.getText().toString();
 
-        if (estado_tarea.equals("No finalizado")){
+        if (estado_tarea.equals("No finalizada")){
             Tarea_No_Finalizada.setVisibility(View.VISIBLE);
         }
-        if (estado_tarea.equals("Finalizado")){
+        if (estado_tarea.equals("Finalizada")){
             Tarea_Finalizada.setVisibility(View.VISIBLE);
         }
     }
@@ -227,7 +227,7 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
         String estado_seleccionado = adapterView.getItemAtPosition(i).toString();
         Estado_nuevo.setText(estado_seleccionado);
 
-        if (ESTADO_ACTUAL.equals("Finalizado")){
+        if (ESTADO_ACTUAL.equals("Finalizada")){
             Estado_nuevo.setText(Posicion_1);
         }
 

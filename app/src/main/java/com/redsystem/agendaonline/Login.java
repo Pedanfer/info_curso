@@ -100,7 +100,6 @@ public class Login extends ToolBarActivity {
                             progressDialog.dismiss();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             startActivity(new Intent(Login.this,MenuPrincipal.class));
-                            Toast.makeText(Login.this, "Bienvenid@: "+user.getEmail(), Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else {

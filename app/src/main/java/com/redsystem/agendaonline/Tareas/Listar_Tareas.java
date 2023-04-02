@@ -224,7 +224,7 @@ public class Listar_Tareas extends Fragment {
 
     private void ListarTareasFinalizadas() {
         //consulta
-        String estado_tarea = "Finalizado";
+        String estado_tarea = "Finalizada";
         Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("estado").equalTo(estado_tarea);
         options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
@@ -343,7 +343,7 @@ public class Listar_Tareas extends Fragment {
 
     private void ListarTareasNoFinalizadas() {
         //consulta
-        String estado_tarea = "No finalizado";
+        String estado_tarea = "No finalizada";
         Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("estado").equalTo(estado_tarea);
         options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
@@ -586,7 +586,7 @@ public class Listar_Tareas extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Listar", "Finalizados");
+                editor.putString("Listar", "Finalizadas");
                 editor.apply();
 
                 dialog_filtrar.dismiss();
@@ -598,7 +598,7 @@ public class Listar_Tareas extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Listar", "No finalizados");
+                editor.putString("Listar", "No finalizadas");
                 editor.apply();
 
                 dialog_filtrar.dismiss();
@@ -618,10 +618,10 @@ public class Listar_Tareas extends Fragment {
             case "Todas":
                 ListarTodasTareas();
                 break;
-            case "Finalizados":
+            case "Finalizadas":
                 ListarTareasFinalizadas();
                 break;
-            case "No finalizados":
+            case "No finalizadas":
                 ListarTareasNoFinalizadas();
                 break;
         }

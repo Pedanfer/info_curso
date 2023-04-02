@@ -180,6 +180,9 @@ public class MenuPrincipal extends ToolBarActivity {
                 Informacion();
                 break;
             case 2:
+                startActivity(new Intent(MenuPrincipal.this, Configuracion.class));
+                break;
+            case 3:
                 SalirAplicacion();
                 break;
             default:
@@ -196,8 +199,9 @@ public class MenuPrincipal extends ToolBarActivity {
         List<DrawerItemViewModel> drawerItems = new ArrayList<DrawerItemViewModel>();
 
         drawerItems.add(new DrawerItemViewModel(R.drawable.icono_perfil_usuario, "Perfil"));
-        drawerItems.add(new DrawerItemViewModel(R.drawable.acerca_de, "Acerca de"));
-        drawerItems.add(new DrawerItemViewModel(R.drawable.salir, "Salir"));
+        drawerItems.add(new DrawerItemViewModel(R.drawable.info, "Acerca de"));
+        drawerItems.add(new DrawerItemViewModel(R.drawable.icono_configuracion, "Configuración"));
+        drawerItems.add(new DrawerItemViewModel(R.drawable.logout, "Salir"));
 
         DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]));
         mDrawerList.setAdapter(adapter);
@@ -370,11 +374,6 @@ public class MenuPrincipal extends ToolBarActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
-
-        if (item.getItemId() == R.id.Configuracion) {
-            Intent intent = new Intent(MenuPrincipal.this, Configuracion.class);
-            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,7 +41,7 @@ public class Listar_Contactos extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
-    FloatingActionButton addContact, removeAll;
+    FloatingActionButton addContact, removeAll, fabOptions;
 
     FirebaseRecyclerAdapter<Contacto, ViewHolderContacto> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Contacto> firebaseRecyclerOptions;
@@ -56,6 +57,8 @@ public class Listar_Contactos extends Fragment {
         recyclerViewContactos = view.findViewById(R.id.recyclerViewContactos);
         recyclerViewContactos.setHasFixedSize(true);
 
+        LinearLayout tasksFabColumn = view.findViewById(R.id.fabLayout);
+
         addContact = view.findViewById(R.id.fab_add);
         removeAll = view.findViewById(R.id.fab_remove);
 
@@ -68,6 +71,18 @@ public class Listar_Contactos extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+
+
+        fabOptions = view.findViewById(R.id.fab_options);
+        tasksFabColumn.setVisibility(View.GONE);
+        fabOptions.setOnClickListener(new View.OnClickListener() {
+            boolean showOptions = false;
+            @Override
+            public void onClick(View view) {
+                showOptions = !showOptions;
+                tasksFabColumn.setVisibility(showOptions ? View.VISIBLE : View.GONE);
+            }
+        });
 
         ListarContactos();
         return view;
