@@ -1,9 +1,12 @@
 package com.redsystem.agendaonline.Tareas;
+
 import static android.content.Context.MODE_PRIVATE;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -15,7 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +36,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.redsystem.agendaonline.ViewHolder.ViewHolder_Tarea;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.util.function.Function;
+
 public class Listar_Tareas extends Fragment {
 
     RecyclerView recyclerviewTareas;
@@ -41,12 +49,16 @@ public class Listar_Tareas extends Fragment {
     FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Tarea> options;
 
-    Dialog dialog, dialog_filtrar;
+    LinearLayout tasksFabColumn;
+
+    FloatingActionButton addTask, removeTask, filter, fabOptions;
+
+    static Dialog dialog, dialog_filtrar;
 
     FirebaseAuth auth;
     FirebaseUser user;
 
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
 
 
     @Override
@@ -63,6 +75,27 @@ public class Listar_Tareas extends Fragment {
 
         dialog = new Dialog(getActivity());
         dialog_filtrar = new Dialog(getActivity());
+
+        tasksFabColumn = view.findViewById(R.id.tasksFabLayout);
+
+        addTask = view.findViewById(R.id.fab_add);
+        removeTask = view.findViewById(R.id.fab_remove);
+        filter = view.findViewById(R.id.fab_filter);
+        fabOptions = view.findViewById(R.id.fab_options);
+        tasksFabColumn.setVisibility(View.GONE);
+
+        fabOptions.setOnClickListener(new View.OnClickListener() {
+            boolean showOptions = false;
+            @Override
+            public void onClick(View view) {
+                showOptions = !showOptions;
+                tasksFabColumn.setVisibility(showOptions ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        filter.setOnClickListener(v -> FiltrarTareas());
+        removeTask.setOnClickListener(v -> Vaciar_Registro_De_tareas());
+        addTask.setOnClickListener(v -> startActivity(new Intent(getActivity(), Agregar_Tarea.class)));
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
@@ -444,6 +477,7 @@ public class Listar_Tareas extends Fragment {
                             ds.getRef().removeValue();
                         }
                         Toast.makeText(getActivity(), "Tarea eliminada", Toast.LENGTH_SHORT).show();
+                        recreate();
                     }
 
                     @Override
@@ -480,6 +514,7 @@ public class Listar_Tareas extends Fragment {
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             ds.getRef().removeValue();
                         }
+                        recreate();
                         Toast.makeText(getActivity(), "Todas las Tareas se han eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
 
@@ -520,6 +555,12 @@ public class Listar_Tareas extends Fragment {
         }
     }
 
+    private void recreate() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new Listar_Tareas())
+                .commit();
+    }
+
     private void FiltrarTareas() {
         Button Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas;
 
@@ -536,8 +577,8 @@ public class Listar_Tareas extends Fragment {
                 editor.putString("Listar", "Todas");
                 editor.apply();
 
-                Toast.makeText(getActivity(), "Todas las Tareas", Toast.LENGTH_SHORT).show();
                 dialog_filtrar.dismiss();
+                recreate();
             }
         });
 
@@ -548,8 +589,8 @@ public class Listar_Tareas extends Fragment {
                 editor.putString("Listar", "Finalizados");
                 editor.apply();
 
-                Toast.makeText(getActivity(), "Tareas finalizadas", Toast.LENGTH_SHORT).show();
                 dialog_filtrar.dismiss();
+                recreate();
             }
         });
 
@@ -557,10 +598,11 @@ public class Listar_Tareas extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Listar", "No finalizados");                editor.apply();
-                
-                Toast.makeText(getActivity(), "Tareas no finalizadas", Toast.LENGTH_SHORT).show();
+                editor.putString("Listar", "No finalizados");
+                editor.apply();
+
                 dialog_filtrar.dismiss();
+                recreate();
             }
         });
 

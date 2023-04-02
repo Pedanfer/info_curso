@@ -135,9 +135,6 @@ public class Agregar_Tarea extends ToolBarActivity {
 
     private void Agregar_Tarea(){
 
-        //Obtener los datos
-        String uid_usuario = Uid_Usuario.getText().toString();
-        String correo_usuario = Correo_usuario.getText().toString();
         String fecha_hora_actual = Fecha_hora_actual.getText().toString();
         String titulo = Titulo.getText().toString();
         String descripcion = Descripcion.getText().toString();
@@ -146,12 +143,12 @@ public class Agregar_Tarea extends ToolBarActivity {
         String id_tarea = BD_Firebase.push().getKey();
 
         //Validar datos
-        if (!uid_usuario.equals("") && !correo_usuario.equals("") && !fecha_hora_actual.equals("") &&
+        if (!fecha_hora_actual.equals("") &&
                 !titulo.equals("") && !descripcion.equals("") && ! fecha.equals("") && !estado.equals("")){
 
             Tarea tarea = new Tarea(id_tarea,
-                    uid_usuario,
-                    correo_usuario,
+                    user.getUid(),
+                    user.getEmail(),
                     fecha_hora_actual,
                     titulo,
                     descripcion,
