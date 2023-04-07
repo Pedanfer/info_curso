@@ -2,15 +2,12 @@ package com.redsystem.agendaonline.Perfil;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
-import com.redsystem.agendaonline.ActualizarPass.ActualizarPassUsuario;
+import com.redsystem.agendaonline.Perfil.ActualizarPass.ActualizarPassUsuario;
 import com.redsystem.agendaonline.MenuPrincipal;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
