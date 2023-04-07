@@ -183,6 +183,9 @@ public class MenuPrincipal extends ToolBarActivity {
                 startActivity(new Intent(MenuPrincipal.this, Configuracion.class));
                 break;
             case 3:
+                startActivity(new Intent(MenuPrincipal.this, Tareas_Importantes.class));
+                break;
+            case 4:
                 SalirAplicacion();
                 break;
             default:
@@ -196,11 +199,12 @@ public class MenuPrincipal extends ToolBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        List<DrawerItemViewModel> drawerItems = new ArrayList<DrawerItemViewModel>();
+        List<DrawerItemViewModel> drawerItems = new ArrayList<>();
 
         drawerItems.add(new DrawerItemViewModel(R.drawable.icono_perfil_usuario, "Perfil"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.info, "Acerca de"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.icono_configuracion, "Configuración"));
+        drawerItems.add(new DrawerItemViewModel(R.drawable.alert, "Tareas importantes"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.logout, "Salir"));
 
         DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]));

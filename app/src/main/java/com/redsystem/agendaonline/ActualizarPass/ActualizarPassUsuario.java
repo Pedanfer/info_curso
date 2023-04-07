@@ -1,4 +1,4 @@
-package com.redsystem.agendaonline.Perfil.ActualizarPass;
+package com.redsystem.agendaonline.ActualizarPass;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;

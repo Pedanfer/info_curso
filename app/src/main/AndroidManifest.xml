@@ -29,9 +29,6 @@
             android:name=".Contactos.Agregar_Contacto"
             android:exported="true" />
         <activity
-            android:name=".Contactos.Listar_Contactos"
-            android:exported="true" />
-        <activity
             android:name=".ActualizarPass.ActualizarPassUsuario"
             android:exported="true" />
         <activity
@@ -43,7 +40,6 @@
         <activity android:name=".Tareas.Actualizar_Tarea" />
         <activity android:name=".Perfil.Perfil_Usuario" />
         <activity android:name=".Tareas.Tareas_Importantes" />
-        <activity android:name=".Tareas.Listar_Tareas" />
         <activity android:name=".Tareas.Agregar_Tarea" />
         <activity
             android:name=".MenuPrincipal"

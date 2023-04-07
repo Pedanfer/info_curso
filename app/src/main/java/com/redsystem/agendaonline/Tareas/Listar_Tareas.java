@@ -42,8 +42,8 @@ public class Listar_Tareas extends Fragment {
 
     RecyclerView recyclerviewTareas;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference BD_Usuarios;
 
+    DatabaseReference BD_Usuarios;
     LinearLayoutManager linearLayoutManager;
 
     FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea> firebaseRecyclerAdapter;

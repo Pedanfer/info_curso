@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
-import com.redsystem.agendaonline.Perfil.ActualizarPass.ActualizarPassUsuario;
+import com.redsystem.agendaonline.ActualizarPass.ActualizarPassUsuario;
 import com.redsystem.agendaonline.MenuPrincipal;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
