@@ -23,6 +23,9 @@
             android:name=".Contactos.Actualizar_Contacto"
             android:exported="true" />
         <activity
+            android:name=".Tareas.Definir_Asignaturas"
+            android:exported="true" />
+        <activity
             android:name=".Contactos.Detalle_contacto"
             android:exported="true" />
         <activity

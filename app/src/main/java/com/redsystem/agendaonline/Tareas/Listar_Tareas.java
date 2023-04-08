@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -86,6 +87,7 @@ public class Listar_Tareas extends Fragment {
 
         fabOptions.setOnClickListener(new View.OnClickListener() {
             boolean showOptions = false;
+
             @Override
             public void onClick(View view) {
                 showOptions = !showOptions;
@@ -95,7 +97,13 @@ public class Listar_Tareas extends Fragment {
 
         filter.setOnClickListener(v -> FiltrarTareas());
         removeTask.setOnClickListener(v -> Vaciar_Registro_De_tareas());
-        addTask.setOnClickListener(v -> startActivity(new Intent(getActivity(), Agregar_Tarea.class)));
+        addTask.setOnClickListener(view1 -> {
+            SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+            if (!prefs.getBoolean("subjectsAsigned", false))
+                startActivity(new Intent(getActivity(), Definir_Asignaturas.class));
+            else
+                startActivity(new Intent(getActivity(), Agregar_Tarea.class));
+        });
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
@@ -142,6 +150,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Enviamos los datos a la siguiente actividad
                         Intent intent = new Intent(getActivity(), Detalle_Tarea.class);
@@ -153,6 +162,7 @@ public class Listar_Tareas extends Fragment {
                         intent.putExtra("descripcion", descripcion);
                         intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
+                        intent.putExtra("asignatura", asignatura);
                         startActivity(intent);
                     }
 
@@ -261,6 +271,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Enviamos los datos a la siguiente actividad
                         Intent intent = new Intent(getActivity(), Detalle_Tarea.class);
@@ -272,6 +283,7 @@ public class Listar_Tareas extends Fragment {
                         intent.putExtra("descripcion", descripcion);
                         intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
+                        intent.putExtra("asignatura", asignatura);
                         startActivity(intent);
                     }
 
@@ -380,6 +392,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Enviamos los datos a la siguiente actividad
                         Intent intent = new Intent(getActivity(), Detalle_Tarea.class);
@@ -391,6 +404,7 @@ public class Listar_Tareas extends Fragment {
                         intent.putExtra("descripcion", descripcion);
                         intent.putExtra("fecha_tarea", fecha_tarea);
                         intent.putExtra("estado", estado);
+                        intent.putExtra("asignatura", asignatura);
                         startActivity(intent);
                     }
 

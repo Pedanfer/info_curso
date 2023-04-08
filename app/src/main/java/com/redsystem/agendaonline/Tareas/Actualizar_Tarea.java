@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,24 +31,30 @@ import com.google.firebase.database.ValueEventListener;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView Id_tarea_A, Uid_Usuario_A, Correo_usuario_A, Fecha_registro_A , Fecha_A, Estado_A, Estado_nuevo;
+    Spinner spinnerSubjects;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
+
+    DatabaseReference BD_Firebase;
+
+    TextView Fecha_registro_A , Fecha_A, Estado_A, Estado_nuevo, Asignatura_A;
     EditText Titulo_A, Descripcion_A;
     Button Btn_Calendario_A;
 
     //DECLARAR LOS STRING PARA ALMACENAR LOS DATOS RECUPERADOS DE ACTIVIDAD ANTERIOR
-    String id_tarea_R , uid_usuario_R , correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
+    String id_tarea_R , fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R, asignatura_R;
 
     ImageView Tarea_Finalizada, Tarea_No_Finalizada;
 
     Spinner Spinner_estado;
     int dia, mes , anio;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +80,6 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
     }
 
     private void InicializarVistas(){
-        Id_tarea_A = findViewById(R.id.Id_tarea_A);
-        Uid_Usuario_A = findViewById(R.id.Uid_Usuario_A);
-        Correo_usuario_A = findViewById(R.id.Correo_usuario_A);
         Fecha_registro_A = findViewById(R.id.Fecha_registro_A);
         Fecha_A = findViewById(R.id.Fecha_A);
         Estado_A = findViewById(R.id.Estado_A);
@@ -95,29 +99,24 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
 
     private void RecuperarDatos(){
         Bundle intent = getIntent().getExtras();
-
-        id_tarea_R = intent.getString("id_tarea");
-        uid_usuario_R = intent.getString("uid_usuario");
-        correo_usuario_R = intent.getString("correo_usuario");
         fecha_registro_R = intent.getString("fecha_registro");
         titulo_R = intent.getString("titulo");
         descripcion_R = intent.getString("descripcion");
         fecha_R = intent.getString("fecha_tarea");
         estado_R = intent.getString("estado");
+        asignatura_R = intent.getString("asignatura");
 
 
 
     }
 
     private void SetearDatos(){
-        Id_tarea_A.setText(id_tarea_R);
-        Uid_Usuario_A.setText(uid_usuario_R);
-        Correo_usuario_A.setText(correo_usuario_R);
         Fecha_registro_A.setText(fecha_registro_R);
         Titulo_A.setText(titulo_R);
         Descripcion_A.setText(descripcion_R);
         Fecha_A.setText(fecha_R);
         Estado_A.setText(estado_R);
+        Asignatura_A.setText(asignatura_R);
 
     }
 
@@ -208,6 +207,31 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
                 Toast.makeText(Actualizar_Tarea.this, "Tarea actualizada con éxito", Toast.LENGTH_SHORT).show();
                 onBackPressed();
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void configSpinner() {
+        spinnerSubjects = findViewById(R.id.spinnerSubjects);
+
+        List<String> subjects = new ArrayList<>();
+        Query query = BD_Firebase.child(user.getUid()).child("Asignaturas");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    subjects.add(ds.getValue(String.class));
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, subjects);
+                spinnerSubjects.setAdapter(adapter);
+                spinnerSubjects.setSelection(subjects.indexOf(getIntent().getStringExtra("asignatura")));
+                adapter.notifyDataSetChanged();
             }
 
             @Override

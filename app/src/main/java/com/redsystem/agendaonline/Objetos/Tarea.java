@@ -3,13 +3,13 @@ package com.redsystem.agendaonline.Objetos;
 public class Tarea {
 
     //Atributos con los que contará una NOTA
-    String id_tarea, uid_usuario, correo_usuario, fecha_hora_actual, titulo, descripcion, fecha_tarea, estado;
+    String id_tarea, uid_usuario, correo_usuario, fecha_hora_actual, titulo, descripcion, fecha_tarea, estado, asignatura;
 
     public Tarea() {
 
     }
 
-    public Tarea(String id_tarea, String uid_usuario, String correo_usuario, String fecha_hora_actual, String titulo, String descripcion, String fecha_tarea, String estado) {
+    public Tarea(String id_tarea, String uid_usuario, String correo_usuario, String fecha_hora_actual, String titulo, String descripcion, String fecha_tarea, String estado, String asignatura) {
         this.id_tarea = id_tarea;
         this.uid_usuario = uid_usuario;
         this.correo_usuario = correo_usuario;
@@ -18,6 +18,7 @@ public class Tarea {
         this.descripcion = descripcion;
         this.fecha_tarea = fecha_tarea;
         this.estado = estado;
+        this.asignatura = asignatura;
     }
 
     public String getId_tarea() {
@@ -26,6 +27,14 @@ public class Tarea {
 
     public void setId_tarea(String id_tarea) {
         this.id_tarea = id_tarea;
+    }
+
+    public String getAsignatura() {
+        return asignatura;
+    }
+
+    public void setAsignatura(String asignatura) {
+        this.asignatura = asignatura;
     }
 
     public String getUid_usuario() {

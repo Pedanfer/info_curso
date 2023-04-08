@@ -9,27 +9,38 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.redsystem.agendaonline.Objetos.Tarea;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Agregar_Tarea extends ToolBarActivity {
+    Spinner spinnerSubjects;
+    MaterialButton finish;
 
-    TextView Uid_Usuario, Correo_usuario, Fecha_hora_actual, Fecha, Estado;
+    TextView Uid_Usuario, Correo_usuario, Fecha_hora_actual, Fecha;
     EditText Titulo, Descripcion;
     Button Btn_Calendario;
 
@@ -48,54 +59,78 @@ public class Agregar_Tarea extends ToolBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Agregar tarea");
 
-
         InicializarVariables();
+
         ObtenerDatos();
+
+        configSpinner();
+
         Obtener_Fecha_Hora_Actual();
 
-        Btn_Calendario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar calendario = Calendar.getInstance();
+        Btn_Calendario.setOnClickListener(view -> {
+            final Calendar calendario = Calendar.getInstance();
 
-                dia = calendario.get(Calendar.DAY_OF_MONTH);
-                mes = calendario.get(Calendar.MONTH);
-                anio = calendario.get(Calendar.YEAR);
+            dia = calendario.get(Calendar.DAY_OF_MONTH);
+            mes = calendario.get(Calendar.MONTH);
+            anio = calendario.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Agregar_Tarea.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int AnioSeleccionado, int MesSeleccionado, int DiaSeleccionado) {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(Agregar_Tarea.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int AnioSeleccionado, int MesSeleccionado, int DiaSeleccionado) {
 
-                        String diaFormateado, mesFormateado;
+                    String diaFormateado, mesFormateado;
 
-                        //OBTENER DIA
-                        if (DiaSeleccionado < 10){
-                            diaFormateado = "0"+String.valueOf(DiaSeleccionado);
-                            // Antes: 9/11/2022 -  Ahora 09/11/2022
-                        }else {
-                            diaFormateado = String.valueOf(DiaSeleccionado);
-                            //Ejemplo 13/08/2022
-                        }
+                    //OBTENER DIA
+                    if (DiaSeleccionado < 10){
+                        diaFormateado = "0"+String.valueOf(DiaSeleccionado);
+                        // Antes: 9/11/2022 -  Ahora 09/11/2022
+                    }else {
+                        diaFormateado = String.valueOf(DiaSeleccionado);
+                        //Ejemplo 13/08/2022
+                    }
 
-                        //OBTENER EL MES
-                        int Mes = MesSeleccionado + 1;
+                    //OBTENER EL MES
+                    int Mes = MesSeleccionado + 1;
 
-                        if (Mes < 10){
-                            mesFormateado = "0"+String.valueOf(Mes);
-                            // Antes: 09/8/2022 -  Ahora 09/08/2022
-                        }else {
-                            mesFormateado = String.valueOf(Mes);
-                            //Ejemplo 13/10/2022 - 13/11/2022 - 13/12/2022
-
-                        }
-
-                        //Setear fecha en TextView
-                        Fecha.setText(diaFormateado + "/" + mesFormateado + "/"+ AnioSeleccionado);
+                    if (Mes < 10){
+                        mesFormateado = "0"+String.valueOf(Mes);
+                        // Antes: 09/8/2022 -  Ahora 09/08/2022
+                    }else {
+                        mesFormateado = String.valueOf(Mes);
+                        //Ejemplo 13/10/2022 - 13/11/2022 - 13/12/2022
 
                     }
+
+                    //Setear fecha en TextView
+                    Fecha.setText(diaFormateado + "/" + mesFormateado + "/"+ AnioSeleccionado);
+
                 }
-                ,anio,mes,dia);
-                datePickerDialog.show();
+            }
+            ,anio,mes,dia);
+            datePickerDialog.show();
+
+        });
+    }
+
+    private void configSpinner() {
+        spinnerSubjects = findViewById(R.id.spinnerSubjects);
+
+        List<String> subjects = new ArrayList<>();
+        Query query = BD_Firebase.child(user.getUid()).child("Asignaturas");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    subjects.add(ds.getValue(String.class));
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, subjects);
+                spinnerSubjects.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -106,7 +141,9 @@ public class Agregar_Tarea extends ToolBarActivity {
         Correo_usuario = findViewById(R.id.Correo_usuario);
         Fecha_hora_actual = findViewById(R.id.Fecha_hora_actual);
         Fecha = findViewById(R.id.Fecha);
-        Estado = findViewById(R.id.Estado);
+
+        finish = findViewById(R.id.finish);
+        finish.setOnClickListener(view -> Agregar_Tarea());
 
         Titulo = findViewById(R.id.Titulo);
         Descripcion = findViewById(R.id.Descripcion);
@@ -139,12 +176,12 @@ public class Agregar_Tarea extends ToolBarActivity {
         String titulo = Titulo.getText().toString();
         String descripcion = Descripcion.getText().toString();
         String fecha = Fecha.getText().toString();
-        String estado = Estado.getText().toString();
         String id_tarea = BD_Firebase.push().getKey();
+        String asignatura = spinnerSubjects.getSelectedItem().toString();
 
         //Validar datos
         if (!fecha_hora_actual.equals("") &&
-                !titulo.equals("") && !descripcion.equals("") && ! fecha.equals("") && !estado.equals("")){
+                !titulo.equals("") && !descripcion.equals("") && ! fecha.equals("")){
 
             Tarea tarea = new Tarea(id_tarea,
                     user.getUid(),
@@ -153,8 +190,8 @@ public class Agregar_Tarea extends ToolBarActivity {
                     titulo,
                     descripcion,
                     fecha,
-                    estado);
-
+                    "Por finalizar",
+                    asignatura);
 
             //Establecer el nombre de la BD
             String Nombre_BD = "Tareas_Publicadas";
@@ -169,21 +206,6 @@ public class Agregar_Tarea extends ToolBarActivity {
         else {
             Toast.makeText(this, "Llenar todos los campos", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_agregar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Agregar_tarea_BD) {
-            Agregar_Tarea();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

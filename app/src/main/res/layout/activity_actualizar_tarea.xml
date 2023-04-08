@@ -1,47 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Tareas.Actualizar_Tarea">
-
     <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        tools:context=".Tareas.Actualizar_Tarea"
         android:padding="10dp">
-
-        <!--ID NOTA-->
-        <TextView
-            android:id="@+id/Id_tarea_A"
-            android:text="@string/Id_tarea_A"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:fontFamily="@font/worksans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!--UID DEL USUARIO-->
-        <TextView
-            android:id="@+id/Uid_Usuario_A"
-            android:hint="@string/Uid_Usuario_A"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:fontFamily="@font/worksans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!--CORREO DEL USUARIO-->
-        <TextView
-            android:id="@+id/Correo_usuario_A"
-            android:hint="@string/Correo_usuario_A"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:fontFamily="@font/worksans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
         <!--FECHA DE REGISTRO-->
         <TextView
@@ -111,13 +77,13 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <!--BOTÓN PARA ABRIR CALENDARIO-->
             <Button
                 android:id="@+id/Btn_Calendario_A"
-                android:text="@string/Btn_Calendario_A"
+                android:text="Fecha de entrega"
                 app:icon="@drawable/icono_calendario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -134,11 +100,37 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/SpinnerWithStroke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Asignatura"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:layout_gravity="center"
+            android:id="@+id/spinnerSubjects"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="32dp">
 
             <Spinner
                 android:id="@+id/Spinner_estado"
@@ -153,7 +145,26 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- other views -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            app:icon="@drawable/icono_agregar_tarea"
+            android:text="Terminar"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary" />
+
+    </RelativeLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>

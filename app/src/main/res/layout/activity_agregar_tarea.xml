@@ -1,129 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".Tareas.Agregar_Tarea">
+
+    <!--UID DEL USUARIO-->
+    <TextView
+        android:id="@+id/Uid_Usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/worksans"
+        android:hint="@string/Uid_Usuario"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <!--CORREO DEL USUARIO-->
+    <TextView
+        android:id="@+id/Correo_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/worksans"
+        android:hint="@string/Correo_usuario"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <!--ICONO - TEXTVIEW-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--Icono-->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/fecha_hora_registro" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/worksans"
+            android:text="@string/Fecha_hora_actual_TXT"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!--FECHA Y HORA ACTUAL DEL DISPOSITIVO-->
+    <TextView
+        android:id="@+id/Fecha_hora_actual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginVertical="12dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/worksans"
+        android:hint="@string/Fecha_hora_actual"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!--TITULO-->
+    <EditText
+        android:id="@+id/Titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/worksans"
+        android:hint="@string/Titulo"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <!--DESCRIPCION-->
+    <EditText
+        android:id="@+id/Descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:hint="@string/Descripcion"
+        android:minHeight="150dp"
+        android:textSize="20sp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal">
 
-        <!--UID DEL USUARIO-->
-        <TextView
-            android:id="@+id/Uid_Usuario"
-            android:hint="@string/Uid_Usuario"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:fontFamily="@font/worksans"
+        <!--BOTÓN PARA ABRIR CALENDARIO-->
+        <Button
+            android:id="@+id/Btn_Calendario"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!--CORREO DEL USUARIO-->
-        <TextView
-            android:id="@+id/Correo_usuario"
-            android:hint="@string/Correo_usuario"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:fontFamily="@font/worksans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!--ICONO - TEXTVIEW-->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="Fecha de entrega"
+            app:icon="@drawable/icono_calendario" />
 
-            <!--Icono-->
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/fecha_hora_registro"/>
-
-            <TextView
-                android:text="@string/Fecha_hora_actual_TXT"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/worksans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!--FECHA Y HORA ACTUAL DEL DISPOSITIVO-->
+        <!--VISUALIZAR FECHA ELEGIDA-->
         <TextView
-            android:id="@+id/Fecha_hora_actual"
-            android:hint="@string/Fecha_hora_actual"
-            android:textSize="18sp"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/worksans"
+            android:id="@+id/Fecha"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!--TITULO-->
-        <EditText
-            android:id="@+id/Titulo"
-            android:hint="@string/Titulo"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/worksans"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!--DESCRIPCION-->
-        <EditText
-            android:id="@+id/Descripcion"
-            android:hint="@string/Descripcion"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:minHeight="150dp"
-            android:gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <!--BOTÓN PARA ABRIR CALENDARIO-->
-            <Button
-                android:id="@+id/Btn_Calendario"
-                android:text="@string/Btn_Calendario"
-                app:icon="@drawable/icono_calendario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <!--VISUALIZAR FECHA ELEGIDA-->
-            <TextView
-                android:id="@+id/Fecha"
-                android:hint="@string/Fecha"
-                android:textSize="20sp"
-                android:layout_marginStart="15dp"
-                android:fontFamily="@font/worksans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!--ESTADO DE LA NOTA-->
-        <TextView
-            android:id="@+id/Estado"
-            android:text="@string/Estado"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/worksans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:hint="@string/Fecha"
+            android:textSize="20sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/SpinnerWithStroke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Asignatura"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:layout_gravity="center"
+            android:id="@+id/spinnerSubjects"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- other views -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            app:icon="@drawable/icono_agregar_tarea"
+            android:text="Terminar"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary" />
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
