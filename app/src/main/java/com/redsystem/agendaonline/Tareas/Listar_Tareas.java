@@ -110,7 +110,7 @@ public class Listar_Tareas extends Fragment {
         filter.setOnClickListener(v -> FiltrarTareas());
         removeTask.setOnClickListener(v -> Vaciar_Registro_De_tareas());
         addTask.setOnClickListener(view1 -> {
-            SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+            SharedPreferences prefs = getActivity().getSharedPreferences("Tareas", MODE_PRIVATE);
             if (!prefs.getBoolean("subjectsAsigned", false))
                 startActivity(new Intent(getActivity(), Definir_Asignaturas.class));
             else
@@ -383,8 +383,8 @@ public class Listar_Tareas extends Fragment {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
-                if (!filtro_asignatura.equals("Todas") && _tarea.getAsignatura() != filtro_asignatura) {
-                    viewHolder_tarea.itemView.setVisibility(View.GONE);
+                if (!filtro_asignatura.equals("Todas") && !_tarea.getAsignatura().equals(filtro_asignatura)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
                     return;
                 }
                 viewHolder_tarea.SetearDatos(

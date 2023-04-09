@@ -1,14 +1,11 @@
 package com.redsystem.agendaonline.Contactos;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -33,6 +36,10 @@ import com.redsystem.agendaonline.Objetos.Contacto;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ViewHolder.ViewHolderContacto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Listar_Contactos extends Fragment {
 
     RecyclerView recyclerViewContactos;
@@ -41,17 +48,21 @@ public class Listar_Contactos extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 
-    FloatingActionButton addContact, removeAll, fabOptions;
+    FloatingActionButton addContact, removeAll, filter, fabOptions;
 
     FirebaseRecyclerAdapter<Contacto, ViewHolderContacto> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Contacto> firebaseRecyclerOptions;
 
-    Dialog dialog;
+    Dialog dialog, dialog_filtrar;
+
+    static SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = getActivity().getSharedPreferences("Contactos", MODE_PRIVATE);
 
         View view = inflater.inflate(R.layout.activity_listar_contactos, container, false);
         recyclerViewContactos = view.findViewById(R.id.recyclerViewContactos);
@@ -59,24 +70,30 @@ public class Listar_Contactos extends Fragment {
 
         LinearLayout tasksFabColumn = view.findViewById(R.id.fabLayout);
 
-        addContact = view.findViewById(R.id.fab_add);
-        removeAll = view.findViewById(R.id.fab_remove);
+        addContact = view.findViewById(R.id.fab_add_contactos);
+        removeAll = view.findViewById(R.id.fab_remove_contactos);
+        filter = view.findViewById(R.id.fab_filter_contactos);
 
+        filter.setOnClickListener(vi -> FiltrarContactos());
         addContact.setOnClickListener(v -> startActivity(new Intent(getActivity(), Agregar_Contacto.class)));
         removeAll.setOnClickListener(vi -> Vaciar_Registro_Contactos());
         firebaseDatabase = FirebaseDatabase.getInstance();
         BD_Usuarios = firebaseDatabase.getReference("Usuarios");
 
         dialog = new Dialog(getActivity());
+        dialog_filtrar = new Dialog(getActivity());
+
+        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate());
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
 
-        fabOptions = view.findViewById(R.id.fab_options);
+        fabOptions = view.findViewById(R.id.fab_options_contactos);
         tasksFabColumn.setVisibility(View.GONE);
         fabOptions.setOnClickListener(new View.OnClickListener() {
             boolean showOptions = false;
+
             @Override
             public void onClick(View view) {
                 showOptions = !showOptions;
@@ -88,12 +105,109 @@ public class Listar_Contactos extends Fragment {
         return view;
     }
 
+    private void recreate() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new Listar_Contactos())
+                .commit();
+    }
+
+    private void FiltrarContactos() {
+        dialog_filtrar.setContentView(R.layout.cuadro_dialogo_filtrar_contactos);
+
+        Button todos_contactos = dialog_filtrar.findViewById(R.id.filtro_todos);
+        Button profesores_contactos = dialog_filtrar.findViewById(R.id.filtro_profesores);
+        Button alumnos_contactos = dialog_filtrar.findViewById(R.id.filtro_alumnos);
+
+        List<Button> buttons = new ArrayList<Button>(Arrays.asList(todos_contactos, profesores_contactos, alumnos_contactos));
+
+        changeColors(todos_contactos, profesores_contactos, alumnos_contactos, buttons);
+
+        todos_contactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Listar", "Todos");
+                editor.apply();
+                changeColors(todos_contactos, profesores_contactos, alumnos_contactos, buttons);
+            }
+        });
+
+        profesores_contactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Listar", "Profesores");
+                editor.apply();
+                changeColors(todos_contactos, profesores_contactos, alumnos_contactos, buttons);
+            }
+        });
+
+        alumnos_contactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Listar", "Alumnos");
+                editor.apply();
+                changeColors(todos_contactos, profesores_contactos, alumnos_contactos, buttons);
+            }
+        });
+
+        dialog_filtrar.show();
+    }
+
+    private void changeColors(Button todos_contactos, Button profesores_contactos, Button alunmnos_contactos, List<Button> buttons) {
+        switch (sharedPreferences.getString("Listar", "")) {
+            case "Todos":
+                for (Button button : buttons) {
+                    if (button == todos_contactos)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            case "Alumnos":
+                for (Button button : buttons) {
+                    if (button == alunmnos_contactos)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            case "Profesores":
+                for (Button button : buttons) {
+                    if (button == profesores_contactos)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private void ListarContactos() {
         Query query = BD_Usuarios.child(user.getUid()).child("Contactos").orderByChild("nombres");
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Contacto>().setQuery(query, Contacto.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Contacto, ViewHolderContacto>(firebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolderContacto viewHolderContacto, int position, @NonNull Contacto contacto) {
+                switch (sharedPreferences.getString("Listar", "")) {
+                    case "Todos":
+                        break;
+                    case "Profesores":
+                        if (!contacto.getIsProf()){
+                            viewHolderContacto.itemView.getLayoutParams().width = 0;
+                            viewHolderContacto.itemView.getLayoutParams().height = 0;
+                        }
+                        break;
+                    case "Alumnos":
+                        if (contacto.getIsProf()){
+                            viewHolderContacto.itemView.getLayoutParams().width = 0;
+                            viewHolderContacto.itemView.getLayoutParams().height = 0;
+                        }
+                        break;
+                }
                 viewHolderContacto.SetearDatosContacto(
                         getContext(),
                         contacto.getId_contacto(),

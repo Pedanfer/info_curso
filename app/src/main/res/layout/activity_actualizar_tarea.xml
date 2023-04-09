@@ -157,7 +157,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="16dp"
             app:icon="@drawable/icono_agregar_tarea"
-            android:text="Terminar"
+            android:text="Guardar"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="18sp"

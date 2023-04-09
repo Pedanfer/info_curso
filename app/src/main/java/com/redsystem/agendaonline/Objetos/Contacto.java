@@ -3,12 +3,13 @@ package com.redsystem.agendaonline.Objetos;
 public class Contacto {
 
     String id_contacto, uid_contacto, nombres, apellidos, correo, telefono, edad, direccion, imagen;
+    boolean isProf;
 
     public Contacto() {
 
     }
 
-    public Contacto(String id_contacto, String uid_contacto, String nombres, String apellidos, String correo, String telefono, String edad, String direccion, String imagen) {
+    public Contacto(String id_contacto, String uid_contacto, String nombres, String apellidos, String correo, String telefono, String edad, String direccion, String imagen, boolean isProf) {
         this.id_contacto = id_contacto;
         this.uid_contacto = uid_contacto;
         this.nombres = nombres;
@@ -18,6 +19,15 @@ public class Contacto {
         this.edad = edad;
         this.direccion = direccion;
         this.imagen = imagen;
+        this.isProf = isProf;
+    }
+
+    public boolean getIsProf() {
+        return isProf;
+    }
+
+    public void setIsProf(boolean isProf) {
+        this.isProf = isProf;
     }
 
     public String getId_contacto() {

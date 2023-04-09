@@ -1,16 +1,18 @@
 package com.redsystem.agendaonline.Contactos;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 import com.redsystem.agendaonline.Objetos.Contacto;
-import com.redsystem.agendaonline.Perfil.Perfil_Usuario;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 
@@ -29,6 +30,10 @@ public class Agregar_Contacto extends ToolBarActivity {
     ImageView Editar_Telefono_C;
     Button Btn_Guardar_Contacto;
     Dialog dialog_establecer_telefono;
+
+    Boolean isProf;
+
+    SwitchCompat switchOnOff;
 
     DatabaseReference BD_Usuarios;
 
@@ -41,11 +46,29 @@ public class Agregar_Contacto extends ToolBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_agregar_contacto);
+        isProf = true;
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("Agregar contacto");
 
+        switchOnOff = findViewById(R.id.switchOnOff);
+        TextView tvSwitchAlumno = findViewById(R.id.tvSwitchYes);
+        TextView tvSwitchProfesor = findViewById(R.id.tvSwitchNo);
+        switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isProf = true;
+                    tvSwitchAlumno.setTextColor(ContextCompat.getColor(Agregar_Contacto.this, R.color.bottom_tab));
+                    tvSwitchProfesor.setTextColor(ContextCompat.getColor(Agregar_Contacto.this, R.color.white));
+                } else {
+                    isProf = false;
+                    tvSwitchAlumno.setTextColor(ContextCompat.getColor(Agregar_Contacto.this, R.color.white));
+                    tvSwitchProfesor.setTextColor(ContextCompat.getColor(Agregar_Contacto.this, R.color.bottom_tab));
+                }
+            }
+        });
 
         InicializarVariables();
         ObtenerUidUsuario();
@@ -65,7 +88,7 @@ public class Agregar_Contacto extends ToolBarActivity {
         });
     }
 
-    private void InicializarVariables(){
+    private void InicializarVariables() {
         Uid_Usuario_C = findViewById(R.id.Uid_Usuario_C);
         Nombres_C = findViewById(R.id.Nombres_C);
         Apellidos_C = findViewById(R.id.Apellidos_C);
@@ -85,12 +108,12 @@ public class Agregar_Contacto extends ToolBarActivity {
         dialog = new Dialog(Agregar_Contacto.this);
     }
 
-    private void ObtenerUidUsuario(){
+    private void ObtenerUidUsuario() {
         String UidRecuperado = getIntent().getStringExtra("Uid");
         Uid_Usuario_C.setText(UidRecuperado);
     }
 
-    private void Establecer_telefono_contacto(){
+    private void Establecer_telefono_contacto() {
         CountryCodePicker ccp;
         EditText Establecer_Telefono;
         Button Btn_Aceptar_Telefono;
@@ -106,12 +129,12 @@ public class Agregar_Contacto extends ToolBarActivity {
             public void onClick(View v) {
                 String codigo_pais = ccp.getSelectedCountryCodeWithPlus();
                 String telefono = Establecer_Telefono.getText().toString();
-                String codigo_pais_telefono = codigo_pais+telefono; //+51956605043
+                String codigo_pais_telefono = codigo_pais + telefono; //+51956605043
 
-                if (!telefono.equals("")){
+                if (!telefono.equals("")) {
                     Telefono_C.setText(codigo_pais_telefono);
                     dialog_establecer_telefono.dismiss();
-                }else {
+                } else {
                     Toast.makeText(Agregar_Contacto.this, "Ingrese un número telefónico", Toast.LENGTH_SHORT).show();
                     dialog_establecer_telefono.dismiss();
                 }
@@ -122,7 +145,7 @@ public class Agregar_Contacto extends ToolBarActivity {
         dialog_establecer_telefono.setCanceledOnTouchOutside(true);
     }
 
-    private void AgregarContacto(){
+    private void AgregarContacto() {
         /*Obtener los datos*/
         String nombre = Nombres_C.getText().toString();
         String apellidos = Apellidos_C.getText().toString();
@@ -135,7 +158,7 @@ public class Agregar_Contacto extends ToolBarActivity {
         String id_contacto = BD_Usuarios.push().getKey();
 
         /*Validar los datos*/
-        if (!nombre.equals("")){
+        if (!nombre.equals("")) {
 
             Contacto contacto = new Contacto(
                     id_contacto,
@@ -146,7 +169,7 @@ public class Agregar_Contacto extends ToolBarActivity {
                     telefono,
                     edad,
                     direccion,
-                    "");
+                    "", isProf);
 
             /*Establecer el nombre de la bd*/
             String Nombre_BD = "Contactos";
@@ -155,15 +178,14 @@ public class Agregar_Contacto extends ToolBarActivity {
             Toast.makeText(this, "Contacto agregado", Toast.LENGTH_SHORT).show();
             onBackPressed();
 
-        }
-        else {
+        } else {
             //Toast.makeText(this, "Por favor complete al menos el nombre del contacto", Toast.LENGTH_SHORT).show();
             ValidarRegistroContacto();
         }
 
     }
 
-    private void ValidarRegistroContacto(){
+    private void ValidarRegistroContacto() {
 
         Button Btn_Validar_Registro_C;
 

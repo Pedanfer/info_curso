@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add"
+                android:id="@+id/fab_add_contactos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -38,7 +38,18 @@
                 app:tint="@android:color/white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_remove"
+                android:id="@+id/fab_filter_contactos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:elevation="2dp"
+                app:fabSize="mini"
+                app:maxImageSize="26dp"
+                app:srcCompat="@drawable/icono_filtrar"
+                app:tint="@android:color/white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_remove_contactos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -49,7 +60,7 @@
                 app:tint="@android:color/white" />
         </LinearLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_options"
+            android:id="@+id/fab_options_contactos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"

@@ -84,7 +84,7 @@
         android:layout_height="67dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:text="Terminar"
+        android:text="Guardar"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="18sp"

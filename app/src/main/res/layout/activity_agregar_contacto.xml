@@ -102,6 +102,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="80dp"
+            android:background="@drawable/bg_switch"
+            android:padding="3.5dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchOnOff"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tvSwitchYes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Alumno"
+                    android:textColor="@color/bottom_tab"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvSwitchNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Profesor"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
         <!--Botón para registrar contacto-->
         <Button
             android:id="@+id/Btn_Guardar_Contacto"
@@ -109,6 +162,7 @@
             android:fontFamily="@font/worksans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
