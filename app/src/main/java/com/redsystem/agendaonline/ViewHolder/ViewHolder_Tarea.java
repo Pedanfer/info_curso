@@ -47,11 +47,11 @@ public class ViewHolder_Tarea extends RecyclerView.ViewHolder {
 
     public void SetearDatos(Context context, String id_tarea , String uid_usuario,  String correo_usuario,
                             String fecha_hora_registro, String titulo, String descripcion, String fecha_tarea,
-                            String estado){
+                            String estado, String asignatura){
 
         //DECLARAR LAS VISTAS
         TextView Id_tarea_Item, Uid_Usuario_Item, Correo_usuario_Item,Fecha_hora_registro_Item,Titulo_Item,
-                Descripcion_Item, Fecha_Item, Estado_Item;
+                Descripcion_Item, Fecha_Item, Estado_Item, Asignatura_Item;
 
         ImageView Tarea_Finalizada_Item, Tarea_No_Finalizada_Item;
 
@@ -64,6 +64,7 @@ public class ViewHolder_Tarea extends RecyclerView.ViewHolder {
         Descripcion_Item = mView.findViewById(R.id.Descripcion_Item);
         Fecha_Item = mView.findViewById(R.id.Fecha_Item);
         Estado_Item = mView.findViewById(R.id.Estado_Item);
+        Asignatura_Item = mView.findViewById(R.id.Asignatura_Item);
 
         Tarea_Finalizada_Item = mView.findViewById(R.id.Tarea_Finalizada_Item);
         Tarea_No_Finalizada_Item = mView.findViewById(R.id.Tarea_No_Finalizada_Item);
@@ -77,6 +78,7 @@ public class ViewHolder_Tarea extends RecyclerView.ViewHolder {
         Descripcion_Item.setText(descripcion);
         Fecha_Item.setText(fecha_tarea);
         Estado_Item.setText(estado);
+        Asignatura_Item.setText(asignatura);
 
         //GESTIONAMOS EL COLOR DEL ESTADO
         if (estado.equals("Finalizada")){

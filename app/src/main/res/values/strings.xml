@@ -54,7 +54,7 @@
     <string name="Descripcion"> Descripcion</string>
     <string name="Btn_Calendario">Calendario</string>
     <string name="Fecha"> 00/00/0000 </string>
-    <string name="Estado">No finalizada</string>
+    <string name="Estado">Por finalizar</string>
 
     <!--MENÚ-->
     <string name="Agregar_Tarea_BD">Agregar</string>
@@ -77,7 +77,7 @@
     <string name="Titulo_Item"> Título </string>
     <string name="Descripcion_Item"> Descripcion</string>
     <string name="Fecha_Item"> 00/00/0000 </string>
-    <string name="Estado_Item">No finalizada</string>
+    <string name="Estado_Item">Por finalizar</string>
 
     <!--ITEM TAREA IMPORTANTE-->
     <string name="Id_tarea_Item_I">Id tarea</string>
@@ -87,7 +87,7 @@
     <string name="Titulo_Item_I"> Título </string>
     <string name="Descripcion_Item_I"> Descripcion</string>
     <string name="Fecha_Item_I"> 00/00/0000 </string>
-    <string name="Estado_Item_I">No finalizada</string>
+    <string name="Estado_Item_I">Por finalizar</string>
 
     <!--ITEM CONTACTO-->
     <string name="Id_c_Item"> Id contacto</string>
@@ -135,7 +135,7 @@
     <string name="FiltroTXT">Filtrar Tareas: </string>
     <string name="Todas_Tareas">Todas</string>
     <string name="Tareas_Finalizadas">Finalizadas</string>
-    <string name="Tareas_No_Finalizadas">No finalizadas</string>
+    <string name="Tareas_No_Finalizadas">Por finalizar</string>
 
     <!--CUADRO DE DIÁLOGO - AUTENTICACIÓN-->
     <string name="ImportanteTXT_Aut">Lea con atención</string>
@@ -151,12 +151,12 @@
     <string name="Descripcion_A"> Descripcion</string>
     <string name="Btn_Calendario_A">Calendario</string>
     <string name="Fecha_A"> 00/00/0000 </string>
-    <string name="Estado_A">No finalizada</string>
+    <string name="Estado_A">Por finalizar</string>
     <string name="Estado_nuevo"> -- </string>
 
     <!---SPINNER - ESTADO-->
     <string-array name="Estadostarea">
-        <item>"No finalizada"</item>
+        <item>"Por finalizar"</item>
         <item>"Finalizada"</item>
     </string-array>
 

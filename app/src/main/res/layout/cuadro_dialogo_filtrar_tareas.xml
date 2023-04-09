@@ -4,17 +4,8 @@
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="16dp"
     android:layout_gravity="center">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        app:lottie_imageAssetsFolder="assets"
-        android:layout_gravity="center"
-        app:lottie_fileName="filtro.json"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"/>
 
     <TextView
         android:textSize="20sp"
@@ -52,5 +43,23 @@
         android:fontFamily="@font/worksans"
         android:layout_width="180dp"
         android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/SpinnerWithStroke"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingStart="16dp">
+
+        <Spinner
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:id="@+id/spinnerSubjects"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

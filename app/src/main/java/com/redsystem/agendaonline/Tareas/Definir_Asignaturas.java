@@ -7,12 +7,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.redsystem.agendaonline.Configuracion.Configuracion;
 import com.redsystem.agendaonline.R;
 import com.redsystem.agendaonline.ToolBarActivity;
 
@@ -32,6 +39,22 @@ public class Definir_Asignaturas extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_definir_asignaturas);
         InicializarVariables();
+
+        DatabaseReference ref = BD_Firebase.child(user.getUid()).child("Asignaturas");
+        Query query = ref;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount() == 0) {
+                    String idAsignatura = BD_Firebase.push().getKey();
+                    ref.child(idAsignatura).setValue("Todas");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void InicializarVariables() {
@@ -63,7 +86,6 @@ public class Definir_Asignaturas extends ToolBarActivity {
         if (!nombreAsig.isEmpty()) {
             String Nombre_BD = "Asignaturas";
             String idAsignatura = BD_Firebase.push().getKey();
-
             BD_Firebase.child(user.getUid()).child(Nombre_BD).child(idAsignatura).setValue(nombreAsig);
 
             adapter.add(nombreAsig);

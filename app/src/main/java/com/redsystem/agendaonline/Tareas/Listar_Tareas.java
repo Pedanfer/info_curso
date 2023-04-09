@@ -2,14 +2,8 @@ package com.redsystem.agendaonline.Tareas;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,10 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,11 +37,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.redsystem.agendaonline.Objetos.Tarea;
 import com.redsystem.agendaonline.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.redsystem.agendaonline.ViewHolder.ViewHolder_Tarea;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Listar_Tareas extends Fragment {
 
@@ -49,6 +53,8 @@ public class Listar_Tareas extends Fragment {
 
     FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Tarea> options;
+
+    String filtro_asignatura;
 
     LinearLayout tasksFabColumn;
 
@@ -67,6 +73,10 @@ public class Listar_Tareas extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sharedPreferences = getActivity().getSharedPreferences("Tareas", MODE_PRIVATE);
+
+        filtro_asignatura = sharedPreferences.getString("filtro_asignatura", "Todas");
+
         View view = inflater.inflate(R.layout.activity_listar_tareas, container, false);
         recyclerviewTareas = view.findViewById(R.id.recyclerviewTareas);
         recyclerviewTareas.setHasFixedSize(true);
@@ -76,6 +86,8 @@ public class Listar_Tareas extends Fragment {
 
         dialog = new Dialog(getActivity());
         dialog_filtrar = new Dialog(getActivity());
+
+        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate());
 
         tasksFabColumn = view.findViewById(R.id.tasksFabLayout);
 
@@ -119,6 +131,10 @@ public class Listar_Tareas extends Fragment {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                if (!filtro_asignatura.equals("Todas") && !_tarea.getAsignatura().equals(filtro_asignatura)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
+                    return;
+                }
                 viewHolder_tarea.SetearDatos(
                         getContext(),
                         _tarea.getId_tarea(),
@@ -128,7 +144,8 @@ public class Listar_Tareas extends Fragment {
                         _tarea.getTitulo(),
                         _tarea.getDescripcion(),
                         _tarea.getFecha_tarea(),
-                        _tarea.getEstado()
+                        _tarea.getEstado(),
+                        _tarea.getAsignatura()
                 );
             }
 
@@ -240,6 +257,10 @@ public class Listar_Tareas extends Fragment {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                if (!filtro_asignatura.equals("Todas") && !_tarea.getAsignatura().equals(filtro_asignatura)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
+                    return;
+                }
                 viewHolder_tarea.SetearDatos(
                         getContext(),
                         _tarea.getId_tarea(),
@@ -249,7 +270,8 @@ public class Listar_Tareas extends Fragment {
                         _tarea.getTitulo(),
                         _tarea.getDescripcion(),
                         _tarea.getFecha_tarea(),
-                        _tarea.getEstado()
+                        _tarea.getEstado(),
+                        _tarea.getAsignatura()
                 );
             }
 
@@ -355,12 +377,16 @@ public class Listar_Tareas extends Fragment {
 
     private void ListarTareasNoFinalizadas() {
         //consulta
-        String estado_tarea = "No finalizada";
+        String estado_tarea = "Por finalizar";
         Query query = BD_Usuarios.child(user.getUid()).child("Tareas_Publicadas").orderByChild("estado").equalTo(estado_tarea);
         options = new FirebaseRecyclerOptions.Builder<Tarea>().setQuery(query, Tarea.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Tarea, ViewHolder_Tarea>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
+                if (!filtro_asignatura.equals("Todas") && _tarea.getAsignatura() != filtro_asignatura) {
+                    viewHolder_tarea.itemView.setVisibility(View.GONE);
+                    return;
+                }
                 viewHolder_tarea.SetearDatos(
                         getContext(),
                         _tarea.getId_tarea(),
@@ -370,7 +396,8 @@ public class Listar_Tareas extends Fragment {
                         _tarea.getTitulo(),
                         _tarea.getDescripcion(),
                         _tarea.getFecha_tarea(),
-                        _tarea.getEstado()
+                        _tarea.getEstado(),
+                        _tarea.getAsignatura()
                 );
             }
 
@@ -575,14 +602,64 @@ public class Listar_Tareas extends Fragment {
                 .commit();
     }
 
+    private void configSpinner() {
+        Spinner spinnerSubjects = dialog_filtrar.findViewById(R.id.spinnerSubjects);
+
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+            boolean firstIgnore = true;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerSubjects.setSelection(position);
+                if (firstIgnore) {
+                    firstIgnore = false;
+                    return;
+                }
+                String asignatura = parent.getItemAtPosition(position).toString();
+                sharedPreferences.edit().putString("filtro_asignatura", asignatura).commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        };
+
+        spinnerSubjects.setOnItemSelectedListener(spinnerListener);
+
+        List<String> subjects = new ArrayList<>();
+        Query query = BD_Usuarios.child(user.getUid()).child("Asignaturas");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    subjects.add(ds.getValue(String.class));
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, subjects);
+                spinnerSubjects.setAdapter(adapter);
+                spinnerSubjects.setSelection(subjects.indexOf(filtro_asignatura));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void FiltrarTareas() {
-        Button Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas;
-
         dialog_filtrar.setContentView(R.layout.cuadro_dialogo_filtrar_tareas);
+        configSpinner();
 
-        Todas_tareas = dialog_filtrar.findViewById(R.id.Todas_Tareas);
-        Tareas_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_Finalizadas);
-        Tareas_No_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_No_Finalizadas);
+        Button Todas_tareas = dialog_filtrar.findViewById(R.id.Todas_Tareas);
+        Button Tareas_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_Finalizadas);
+        Button Tareas_No_Finalizadas = dialog_filtrar.findViewById(R.id.Tareas_No_Finalizadas);
+
+        List<Button> buttons = new ArrayList<Button>(Arrays.asList(Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas));
+
+        changeColors(Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas, buttons);
 
         Todas_tareas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -590,9 +667,7 @@ public class Listar_Tareas extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Listar", "Todas");
                 editor.apply();
-
-                dialog_filtrar.dismiss();
-                recreate();
+                changeColors(Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas, buttons);
             }
         });
 
@@ -602,9 +677,7 @@ public class Listar_Tareas extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Listar", "Finalizadas");
                 editor.apply();
-
-                dialog_filtrar.dismiss();
-                recreate();
+                changeColors(Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas, buttons);
             }
         });
 
@@ -612,19 +685,47 @@ public class Listar_Tareas extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Listar", "No finalizadas");
+                editor.putString("Listar", "Por finalizar");
                 editor.apply();
-
-                dialog_filtrar.dismiss();
-                recreate();
+                changeColors(Todas_tareas, Tareas_Finalizadas, Tareas_No_Finalizadas, buttons);
             }
         });
 
         dialog_filtrar.show();
     }
 
+    private void changeColors(Button Todas_tareas, Button Tareas_Finalizadas, Button Tareas_No_Finalizadas, List<Button> buttons) {
+        switch (sharedPreferences.getString("Listar", "")) {
+            case "Todas":
+                for (Button button : buttons) {
+                    if (button == Todas_tareas)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            case "Finalizadas":
+                for (Button button : buttons) {
+                    if (button == Tareas_Finalizadas)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            case "Por finalizar":
+                for (Button button : buttons) {
+                    if (button == Tareas_No_Finalizadas)
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    else
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private void Estado_Filtro() {
-        sharedPreferences = getActivity().getSharedPreferences("Tareas", MODE_PRIVATE);
 
         String estado_filtro = sharedPreferences.getString("Listar", "Todas");
 
@@ -635,7 +736,7 @@ public class Listar_Tareas extends Fragment {
             case "Finalizadas":
                 ListarTareasFinalizadas();
                 break;
-            case "No finalizadas":
+            case "Por finalizar":
                 ListarTareasNoFinalizadas();
                 break;
         }
