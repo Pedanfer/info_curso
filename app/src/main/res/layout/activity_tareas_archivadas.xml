@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/list_gradient"
     tools:context=".Tareas.Tareas_Importantes">
 
     <androidx.recyclerview.widget.RecyclerView

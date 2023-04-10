@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.redsystem.agendaonline">
+    package="com.example.schooltools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,50 +11,50 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icono_agenda"
+        android:icon="@mipmap/student_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icono_agenda_round"
+        android:roundIcon="@mipmap/student_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AgendaOnline">
         <activity
-            android:name=".Configuracion.Configuracion"
+            android:name="com.example.schooltools.Configuracion.Configuracion"
             android:exported="false" />
         <activity
-            android:name=".Contactos.Actualizar_Contacto"
+            android:name="com.example.schooltools.Contactos.Actualizar_Contacto"
             android:exported="true" />
         <activity
-            android:name=".Tareas.Definir_Asignaturas"
+            android:name="com.example.schooltools.Tareas.Definir_Asignaturas"
             android:exported="true" />
         <activity
-            android:name=".Contactos.Detalle_contacto"
+            android:name="com.example.schooltools.Contactos.Detalle_contacto"
             android:exported="true" />
         <activity
-            android:name=".Contactos.Agregar_Contacto"
+            android:name="com.example.schooltools.Contactos.Agregar_Contacto"
             android:exported="true" />
         <activity
-            android:name=".ActualizarPass.ActualizarPassUsuario"
+            android:name="com.example.schooltools.ActualizarPass.ActualizarPassUsuario"
             android:exported="true" />
         <activity
-            android:name=".Perfil.Editar_imagen_perfil"
+            android:name="com.example.schooltools.Perfil.Editar_imagen_perfil"
             android:exported="true" />
         <activity
-            android:name=".Tareas.Detalle_Tarea"
+            android:name="com.example.schooltools.Tareas.Detalle_Tarea"
             android:exported="true" />
-        <activity android:name=".Tareas.Actualizar_Tarea" />
-        <activity android:name=".Perfil.Perfil_Usuario" />
-        <activity android:name=".Tareas.Tareas_Importantes" />
-        <activity android:name=".Tareas.Agregar_Tarea" />
+        <activity android:name="com.example.schooltools.Tareas.Actualizar_Tarea" />
+        <activity android:name="com.example.schooltools.Perfil.Perfil_Usuario" />
+        <activity android:name="com.example.schooltools.Tareas.Tareas_Importantes" />
+        <activity android:name="com.example.schooltools.Tareas.Agregar_Tarea" />
         <activity
-            android:name=".MenuPrincipal"
-            android:exported="true" />
-        <activity
-            android:name=".Registro"
+            android:name="com.example.schooltools.MenuPrincipal"
             android:exported="true" />
         <activity
-            android:name=".Login"
+            android:name="com.example.schooltools.Registro"
             android:exported="true" />
         <activity
-            android:name=".Pantalla_De_Carga"
+            android:name="com.example.schooltools.Login"
+            android:exported="true" />
+        <activity
+            android:name="com.example.schooltools.Pantalla_De_Carga"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +63,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.schooltools.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
