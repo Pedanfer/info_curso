@@ -1,13 +1,5 @@
 package com.example.schooltools;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,9 +16,26 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.example.schooltools.Configuracion.Configuracion;
+import com.example.schooltools.Contactos.Listar_Contactos;
+import com.example.schooltools.Objetos.DrawerItemViewModel;
+import com.example.schooltools.Perfil.Perfil_Usuario;
+import com.example.schooltools.Tareas.Listar_Tareas;
+import com.example.schooltools.Tareas.Tareas_Importantes;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,12 +46,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.example.schooltools.Configuracion.Configuracion;
-import com.example.schooltools.Contactos.Listar_Contactos;
-import com.example.schooltools.Tareas.Listar_Tareas;
-import com.example.schooltools.Tareas.Tareas_Importantes;
-import com.example.schooltools.Objetos.DrawerItemViewModel;
-import com.example.schooltools.Perfil.Perfil_Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +80,13 @@ public class MenuPrincipal extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setChildContentView(R.layout.activity_menu_principal);
 
+        setFragmentListarTareas();
+
         initializeDrawer();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.tasks);
-        setFragmentListarTareas();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -148,15 +152,15 @@ public class MenuPrincipal extends ToolBarActivity {
 
     }
 
-    private void setFragmentListarTareas() {
+    public void setFragmentListarTareas() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new Listar_Tareas())
+                .replace(R.id.fragment_container, new Listar_Tareas(), "Tareas")
                 .commit();
     }
 
-    private void setFragmentListarContactos() {
+    public void setFragmentListarContactos() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new Listar_Contactos())
+                .replace(R.id.fragment_container, new Listar_Contactos(), "Contactos")
                 .commit();
     }
 
@@ -183,6 +187,17 @@ public class MenuPrincipal extends ToolBarActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        String fragmentTag = fragment.getTag();
+        if (fragmentTag.equals("Tareas"))
+            setFragmentListarTareas();
+        else
+            setFragmentListarContactos();
+        super.onResume();
     }
 
     private void initializeDrawer() {
@@ -363,6 +378,30 @@ public class MenuPrincipal extends ToolBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_principal, menu);
+
+        MenuItem searchViewItem = menu.findItem(R.id.search_bar);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                String fragmentTag = fragment.getTag();
+                if (fragmentTag.equals("Tareas")) {
+                    Listar_Tareas listar_tareas = (Listar_Tareas) fragment;
+                    listar_tareas.recreate(newText);
+                } else {
+                    Listar_Contactos listar_contactos = (Listar_Contactos) fragment;
+                    listar_contactos.recreate(newText);
+                }
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 

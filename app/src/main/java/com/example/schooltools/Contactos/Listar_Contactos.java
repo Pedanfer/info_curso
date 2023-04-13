@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -49,6 +50,8 @@ public class Listar_Contactos extends Fragment {
     FirebaseUser user;
 
     FloatingActionButton addContact, removeAll, filter, fabOptions;
+
+    static String searchText = "";
 
     FirebaseRecyclerAdapter<Contacto, ViewHolderContacto> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Contacto> firebaseRecyclerOptions;
@@ -83,7 +86,7 @@ public class Listar_Contactos extends Fragment {
         dialog = new Dialog(getActivity());
         dialog_filtrar = new Dialog(getActivity());
 
-        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate());
+        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate(searchText));
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -105,9 +108,10 @@ public class Listar_Contactos extends Fragment {
         return view;
     }
 
-    private void recreate() {
+    public void recreate(String searchText) {
+        this.searchText = searchText;
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new Listar_Contactos())
+                .replace(R.id.fragment_container, new Listar_Contactos(), "Contactos")
                 .commit();
     }
 
@@ -200,7 +204,10 @@ public class Listar_Contactos extends Fragment {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Contacto, ViewHolderContacto>(firebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolderContacto viewHolderContacto, int position, @NonNull Contacto contacto) {
-
+                if (!contacto.getNombres().contains(searchText)) {
+                    viewHolderContacto.itemView.getLayoutParams().height = 0;
+                    return;
+                }
                 viewHolderContacto.SetearDatosContacto(
                         getContext(),
                         contacto.getId_contacto(),
@@ -304,8 +311,11 @@ public class Listar_Contactos extends Fragment {
             }
         };
 
-        recyclerViewContactos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        firebaseRecyclerAdapter.startListening();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
+        recyclerViewContactos.setLayoutManager(linearLayoutManager);
         recyclerViewContactos.setAdapter(firebaseRecyclerAdapter);
     }
 

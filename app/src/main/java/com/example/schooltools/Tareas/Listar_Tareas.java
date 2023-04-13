@@ -56,6 +56,8 @@ public class Listar_Tareas extends Fragment {
 
     String filtro_asignatura;
 
+    static String searchText = "";
+
     LinearLayout tasksFabColumn;
 
     FloatingActionButton addTask, removeTask, filter, fabOptions;
@@ -66,6 +68,7 @@ public class Listar_Tareas extends Fragment {
     FirebaseUser user;
 
     static SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -87,7 +90,7 @@ public class Listar_Tareas extends Fragment {
         dialog = new Dialog(getActivity());
         dialog_filtrar = new Dialog(getActivity());
 
-        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate());
+        dialog_filtrar.setOnDismissListener(dialogInterface -> recreate(searchText));
 
         tasksFabColumn = view.findViewById(R.id.tasksFabLayout);
 
@@ -132,6 +135,10 @@ public class Listar_Tareas extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
                 if (!filtro_asignatura.equals("Todas") && !_tarea.getAsignatura().equals(filtro_asignatura)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
+                    return;
+                }
+                if (!_tarea.getTitulo().contains(searchText)) {
                     viewHolder_tarea.itemView.getLayoutParams().height = 0;
                     return;
                 }
@@ -261,6 +268,10 @@ public class Listar_Tareas extends Fragment {
                     viewHolder_tarea.itemView.getLayoutParams().height = 0;
                     return;
                 }
+                if (!_tarea.getTitulo().contains(searchText)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
+                    return;
+                }
                 viewHolder_tarea.SetearDatos(
                         getContext(),
                         _tarea.getId_tarea(),
@@ -384,6 +395,10 @@ public class Listar_Tareas extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder_Tarea viewHolder_tarea, int position, @NonNull Tarea _tarea) {
                 if (!filtro_asignatura.equals("Todas") && !_tarea.getAsignatura().equals(filtro_asignatura)) {
+                    viewHolder_tarea.itemView.getLayoutParams().height = 0;
+                    return;
+                }
+                if (!_tarea.getTitulo().contains(searchText)) {
                     viewHolder_tarea.itemView.getLayoutParams().height = 0;
                     return;
                 }
@@ -518,7 +533,7 @@ public class Listar_Tareas extends Fragment {
                             ds.getRef().removeValue();
                         }
                         Toast.makeText(getActivity(), "Tarea eliminada", Toast.LENGTH_SHORT).show();
-                        recreate();
+                        recreate(searchText);
                     }
 
                     @Override
@@ -555,7 +570,7 @@ public class Listar_Tareas extends Fragment {
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             ds.getRef().removeValue();
                         }
-                        recreate();
+                        recreate(searchText);
                         Toast.makeText(getActivity(), "Todas las Tareas se han eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
 
@@ -596,9 +611,10 @@ public class Listar_Tareas extends Fragment {
         }
     }
 
-    private void recreate() {
+    public void recreate(String searchText) {
+        this.searchText = searchText;
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new Listar_Tareas())
+                .replace(R.id.fragment_container, new Listar_Tareas(), "Tareas")
                 .commit();
     }
 
@@ -725,8 +741,7 @@ public class Listar_Tareas extends Fragment {
         }
     }
 
-    private void Estado_Filtro() {
-
+    public void Estado_Filtro() {
         String estado_filtro = sharedPreferences.getString("Listar", "Todas");
 
         switch (estado_filtro) {
