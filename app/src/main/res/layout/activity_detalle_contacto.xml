@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,144 +11,164 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--Portada - Imagen de perfil-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center">
 
+            <!--Portada-->
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/portada_contacto"/>
+                android:layout_height="200dp"
+                android:background="#ACE6F7"
+                android:paddingTop="6dp"
+                android:src="@drawable/profile_background" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/Imagen_C_D"
-                android:layout_width="140dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="110dp"
                 android:layout_height="140dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="120dp"
-                android:background="#354f60"
-                android:scaleType="centerCrop"
-                android:src="@drawable/imagen_contacto" />
+                android:layout_marginTop="110dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+                <!--Imagen de perfil-->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/Imagen_C_D"
+                    android:layout_width="110dp"
+                    android:layout_height="140dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/placeholder"
+                    android:foreground="@drawable/profile_photo_border"
+                    android:scaleType="matrix" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/Actualizar_imagen_C_A"
+                android:elevation="11dp"
+                android:visibility="invisible"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="230dp"
+                android:src="@drawable/edit_image" />
 
         </RelativeLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
-                android:textSize="25sp"
-                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/worksans"
                 android:text="@string/DetalleContactoTXT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Id_C_D"
-                android:text="@string/Id_C_D"
-                android:visibility="gone"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Id_C_D"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/Uid_Usuario_D"
-                android:text="@string/Uid_Usuario_D"
-                android:visibility="gone"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Uid_Usuario_D"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/Nombre_C_D"
-                android:text="@string/Nombre_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Nombre_C_D"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Apellidos_C_D"
-                android:text="@string/Apellidos_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Apellidos_C_D"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Correo_C_D"
-                android:text="@string/Correo_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Correo_C_D"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Edad_C_D"
-                android:text="@string/Edad_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Edad_C_D"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Direccion_C_D"
-                android:text="@string/Direccion_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans"
+                android:text="@string/Direccion_C_D"
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
-                android:background="#000"/>
+                android:background="#000" />
 
             <TextView
                 android:id="@+id/Telefono_C_D"
-                android:text="@string/Telefono_C_D"
-                android:textSize="20sp"
-                android:fontFamily="@font/worksans"
-                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
                 android:drawableStart="@drawable/icono_telefono"
                 android:drawablePadding="10dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:fontFamily="@font/worksans"
+                android:text="@string/Telefono_C_D"
+                android:textSize="20sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2">
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
 
                 <!--Llamar al contacto-->
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/icono_llamada"/>
+                        android:src="@drawable/icono_llamada" />
 
                     <Button
                         android:id="@+id/Llamar_C"
-                        android:text="@string/Llamar_C"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/Llamar_C" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -157,21 +176,21 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/icono_enviar_mensaje"/>
+                        android:src="@drawable/icono_enviar_mensaje" />
 
                     <Button
                         android:id="@+id/Mensaje_C"
-                        android:text="@string/Mensaje_C"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/Mensaje_C" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

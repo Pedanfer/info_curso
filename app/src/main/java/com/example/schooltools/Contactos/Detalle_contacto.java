@@ -1,10 +1,5 @@
 package com.example.schooltools.Contactos;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.example.schooltools.R;
 import com.example.schooltools.ToolBarActivity;
@@ -26,7 +26,7 @@ public class Detalle_contacto extends ToolBarActivity {
     TextView Id_C_D, Uid_Usuario_D, Nombre_C_D, Apellidos_C_D, Correo_C_D, Edad_C_D, Telefono_C_D, Direccion_C_D;
 
     /*String donde almacenaremos los datos del contacto seleccionado*/
-    String id_c , uid_usuario, nombres_c, apellidos_c, correo_c, telefono_c, edad_c, direccion_c;
+    String id_c, uid_usuario, nombres_c, apellidos_c, correo_c, telefono_c, edad_c, direccion_c;
     Button Llamar_C, Mensaje_C;
 
     @Override
@@ -48,9 +48,9 @@ public class Detalle_contacto extends ToolBarActivity {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(Detalle_contacto.this,
-                        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+                        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                     LlamarContacto();
-                }else {
+                } else {
                     SolicitudPermisoLlamada.launch(Manifest.permission.CALL_PHONE);
                 }
             }
@@ -60,16 +60,16 @@ public class Detalle_contacto extends ToolBarActivity {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(Detalle_contacto.this,
-                        Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+                        Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     EnviarMensaje();
-                }else {
+                } else {
                     SolicitudPermisoMensaje.launch(Manifest.permission.SEND_SMS);
                 }
             }
         });
     }
 
-    private void InicializarVariables(){
+    private void InicializarVariables() {
         Imagen_C_D = findViewById(R.id.Imagen_C_D);
         Id_C_D = findViewById(R.id.Id_C_D);
         Uid_Usuario_D = findViewById(R.id.Uid_Usuario_D);
@@ -83,7 +83,7 @@ public class Detalle_contacto extends ToolBarActivity {
         Mensaje_C = findViewById(R.id.Mensaje_C);
     }
 
-    private void RecuperarDatosContacto(){
+    private void RecuperarDatosContacto() {
         Bundle bundle = getIntent().getExtras();
 
         id_c = bundle.getString("id_c");
@@ -97,67 +97,67 @@ public class Detalle_contacto extends ToolBarActivity {
 
     }
 
-    private void SetearDatosContacto(){
+    private void SetearDatosContacto() {
         Id_C_D.setText(id_c);
         Uid_Usuario_D.setText(uid_usuario);
-        Nombre_C_D.setText("Nombres: "+nombres_c);
-        Apellidos_C_D.setText("Apellidos: "+apellidos_c);
-        Correo_C_D.setText("Correo: "+correo_c);
+        Nombre_C_D.setText("Nombres: " + nombres_c);
+        Apellidos_C_D.setText("Apellidos: " + apellidos_c);
+        Correo_C_D.setText("Correo: " + correo_c);
         Telefono_C_D.setText(telefono_c);
-        Edad_C_D.setText("Edad: "+edad_c);
-        Direccion_C_D.setText("Dirección: "+direccion_c);
+        Edad_C_D.setText("Edad: " + edad_c);
+        Direccion_C_D.setText("Dirección: " + direccion_c);
     }
 
-    private void ObtenerImagen(){
+    private void ObtenerImagen() {
         String imagen = getIntent().getStringExtra("imagen_c");
 
         try {
-
-            Glide.with(getApplicationContext()).load(imagen).placeholder(R.drawable.imagen_contacto).into(Imagen_C_D);
-
-        }catch (Exception e){
-
+            if (!imagen.isEmpty()){
+                Glide.with(getApplicationContext()).load(imagen).placeholder(R.drawable.placeholder).into(Imagen_C_D);
+                Imagen_C_D.setBackground(getDrawable(R.drawable.insets));
+            }
+        } catch (Exception e) {
             Toast.makeText(this, "Esperando imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void LlamarContacto(){
+    private void LlamarContacto() {
         String telefono = Telefono_C_D.getText().toString();
-        if (!telefono.equals("")){
+        if (!telefono.equals("")) {
             Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:"+telefono));
+            intent.setData(Uri.parse("tel:" + telefono));
             startActivity(intent);
-        }else {
+        } else {
             Toast.makeText(this, "El contacto no cuenta con un número telefónico", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void EnviarMensaje(){
+    private void EnviarMensaje() {
         String telefono = Telefono_C_D.getText().toString();
-        if (!telefono.equals("")){
+        if (!telefono.equals("")) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("smsto:"+telefono));
+            intent.setData(Uri.parse("smsto:" + telefono));
             intent.putExtra("sms_body", "");
             startActivity(intent);
-        }else {
+        } else {
             Toast.makeText(this, "El contacto no cuenta con un número telefónico", Toast.LENGTH_SHORT).show();
         }
     }
 
     private ActivityResultLauncher<String> SolicitudPermisoLlamada =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted){
+                if (isGranted) {
                     LlamarContacto();
-                }else {
+                } else {
                     Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
                 }
             });
 
     private ActivityResultLauncher<String> SolicitudPermisoMensaje =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted){
+                if (isGranted) {
                     EnviarMensaje();
-                }else{
+                } else {
                     Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
                 }
             });

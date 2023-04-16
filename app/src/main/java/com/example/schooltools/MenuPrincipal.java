@@ -213,8 +213,9 @@ public class MenuPrincipal extends ToolBarActivity {
         drawerItems.add(new DrawerItemViewModel(R.drawable.icono_configuracion, "Configuración"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.alert, "Tareas importantes"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.logout, "Salir"));
+        drawerItems.add(new DrawerItemViewModel(R.drawable.logout, "Salir"));
 
-        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]), user);
+        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[4]), user);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

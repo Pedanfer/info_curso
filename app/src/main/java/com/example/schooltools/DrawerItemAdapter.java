@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,27 +35,33 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemViewModel> {
 
     @Override
     public View getView(int position, View listItem, ViewGroup parent) {
-
         DrawerItemViewModel folder = data[position];
 
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         listItem = inflater.inflate(layoutResourceId, parent, false);
 
-        ImageView imageViewIcon =  listItem.findViewById(R.id.imageViewIcon);
-        CardView cardViewImage =  listItem.findViewById(R.id.profile_pic_card);
-        ImageView imageViewPic =  listItem.findViewById(R.id.profile_pic_view);
-        TextView textViewName =  listItem.findViewById(R.id.textViewName);
-        TextView textViewMail =  listItem.findViewById(R.id.mail_drawer);
+        ImageView imageViewIcon = listItem.findViewById(R.id.imageViewIcon);
+        CardView cardViewImage = listItem.findViewById(R.id.profile_pic_card);
+        ImageView imageViewPic = listItem.findViewById(R.id.profile_pic_view);
+        TextView textViewName = listItem.findViewById(R.id.textViewName);
+        TextView textViewMail = listItem.findViewById(R.id.mail_drawer);
 
-        if (position > 0) {
+        if (position > 0 && position < 5) {
             imageViewIcon.getLayoutParams().width = 200;
-            imageViewIcon.getLayoutParams().height = 330;
+            imageViewIcon.getLayoutParams().height = 230;
             imageViewIcon.setImageResource(folder.icon);
             textViewName.setText(folder.name);
             cardViewImage.setVisibility(View.GONE);
             listItem.findViewById(R.id.nombre_drawer).setVisibility(View.GONE);
             textViewMail.setVisibility(View.GONE);
-            imageViewIcon.setPadding(16,16,24,16);
+            imageViewIcon.setPadding(16, 16, 24, 16);
+        } else if (position == 5) {
+            imageViewIcon.getLayoutParams().width = 600;
+            imageViewIcon.getLayoutParams().height = 280;
+            textViewName.setVisibility(View.GONE);
+            cardViewImage.setVisibility(View.GONE);
+            listItem.findViewById(R.id.nombre_drawer).setVisibility(View.GONE);
+            textViewMail.setVisibility(View.GONE);
         } else {
             imageViewIcon.getLayoutParams().width = 600;
             imageViewIcon.getLayoutParams().height = 800;

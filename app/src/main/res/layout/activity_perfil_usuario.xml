@@ -36,12 +36,10 @@
                     android:id="@+id/Imagen_Perfil"
                     android:layout_width="110dp"
                     android:layout_height="140dp"
-                    android:paddingEnd="20dp"
                     android:adjustViewBounds="false"
                     android:scaleType="matrix"
-                    android:background="#ffffff"
                     android:foreground="@drawable/profile_photo_border"
-                    android:src="@drawable/placeholder" />
+                    android:background="@drawable/placeholder" />
 
             </androidx.cardview.widget.CardView>
 

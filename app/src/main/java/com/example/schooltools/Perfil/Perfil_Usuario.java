@@ -172,6 +172,7 @@ public class Perfil_Usuario extends ToolBarActivity {
         /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
         if (!imagen_perfil.isEmpty()){
             Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.placeholder).into(Imagen_Perfil);
+            Imagen_Perfil.setBackground(getDrawable(R.drawable.insets));
         } else {
             Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
         }

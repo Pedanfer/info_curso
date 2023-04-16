@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetTop="12dp"
-    android:insetBottom="12dp">
+    android:insetTop="0dp"
+    android:insetBottom="10dp">
     <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="800dp"
         android:height="800dp"
@@ -14,5 +15,4 @@
             android:fillColor="#5D5D5D"
             android:pathData="M373.79,314.23l-1,-0.63l-110.53,97.27L151.71,313.6l-1,0.63c-36.85,23.04 -76.02,85.65 -76.02,156.33v0.95l0.85,0.45C76.29,472.36 152.43,512 262.25,512c109.82,0 185.96,-39.63 186.71,-40.04l0.85,-0.45v-0.95C449.81,399.88 410.64,337.27 373.79,314.23z" />
     </vector>
-
 </inset>
