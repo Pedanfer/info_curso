@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
+    android:background="#006A7B"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     local:navigationIcon="?attr/homeAsUpIndicator"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

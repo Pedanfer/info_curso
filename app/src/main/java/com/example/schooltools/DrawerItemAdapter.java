@@ -3,27 +3,35 @@ package com.example.schooltools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.example.schooltools.Objetos.DrawerItemViewModel;
+import com.example.schooltools.Perfil.Perfil_Usuario;
+import com.google.firebase.auth.FirebaseUser;
 
 public class DrawerItemAdapter extends ArrayAdapter<DrawerItemViewModel> {
+    FirebaseUser user;
 
     Context mContext;
     int layoutResourceId;
     DrawerItemViewModel data[] = null;
 
-    public DrawerItemAdapter(Context mContext, int layoutResourceId, DrawerItemViewModel[] data) {
-
+    public DrawerItemAdapter(Context mContext, int layoutResourceId, DrawerItemViewModel[] data, FirebaseUser user) {
         super(mContext, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.mContext = mContext;
         this.data = data;
+        this.user = user;
     }
 
     @Override
@@ -34,15 +42,29 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemViewModel> {
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         listItem = inflater.inflate(layoutResourceId, parent, false);
 
-        ImageView imageViewIcon = (ImageView) listItem.findViewById(R.id.imageViewIcon);
-        imageViewIcon.getLayoutParams().width = 200;
-        imageViewIcon.getLayoutParams().height = 200;
+        ImageView imageViewIcon =  listItem.findViewById(R.id.imageViewIcon);
+        CardView cardViewImage =  listItem.findViewById(R.id.profile_pic_card);
+        ImageView imageViewPic =  listItem.findViewById(R.id.profile_pic_view);
+        TextView textViewName =  listItem.findViewById(R.id.textViewName);
+        TextView textViewMail =  listItem.findViewById(R.id.mail_drawer);
 
-        imageViewIcon.setImageResource(folder.icon);
-
-        TextView textViewName = (TextView) listItem.findViewById(R.id.textViewName);
-
-        textViewName.setText(folder.name);
+        if (position > 0) {
+            imageViewIcon.getLayoutParams().width = 200;
+            imageViewIcon.getLayoutParams().height = 330;
+            imageViewIcon.setImageResource(folder.icon);
+            textViewName.setText(folder.name);
+            cardViewImage.setVisibility(View.GONE);
+            listItem.findViewById(R.id.nombre_drawer).setVisibility(View.GONE);
+            textViewMail.setVisibility(View.GONE);
+            imageViewIcon.setPadding(16,16,24,16);
+        } else {
+            imageViewIcon.getLayoutParams().width = 600;
+            imageViewIcon.getLayoutParams().height = 800;
+            Drawable drawable = getContext().getResources().getDrawable(R.drawable.profile_gradient);
+            imageViewIcon.setBackground(drawable);
+            textViewName.setVisibility(View.GONE);
+            Perfil_Usuario.getUserImageInto(imageViewPic, mContext);
+        }
 
         return listItem;
     }

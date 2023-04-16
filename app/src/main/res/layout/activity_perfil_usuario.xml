@@ -23,11 +23,7 @@
                 android:layout_height="200dp"
                 android:background="#ACE6F7"
                 android:paddingTop="6dp"
-                android:paddingEnd="20dp"
-                android:scaleType="fitEnd"
                 android:src="@drawable/profile_background" />
-
-
             <androidx.cardview.widget.CardView
                 android:layout_width="110dp"
                 android:layout_height="140dp"
@@ -40,6 +36,9 @@
                     android:id="@+id/Imagen_Perfil"
                     android:layout_width="110dp"
                     android:layout_height="140dp"
+                    android:paddingEnd="20dp"
+                    android:adjustViewBounds="false"
+                    android:scaleType="matrix"
                     android:background="#ffffff"
                     android:foreground="@drawable/profile_photo_border"
                     android:src="@drawable/placeholder" />

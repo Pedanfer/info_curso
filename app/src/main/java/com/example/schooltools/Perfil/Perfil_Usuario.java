@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -167,14 +168,14 @@ public class Perfil_Usuario extends ToolBarActivity {
         });
     }
 
-    private void Cargar_Imagen(String imagen_perfil) {
-        try {
-            /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
+    private void Cargar_Imagen(String imagen_perfil)  {
+        /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
+        if (!imagen_perfil.isEmpty()){
             Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.placeholder).into(Imagen_Perfil);
-        } catch (Exception e) {
-            /*Si la imagen no fue traida con éxito*/
+        } else {
             Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
         }
+
         Editar_imagen.setElevation(11);
     }
 
@@ -185,9 +186,11 @@ public class Perfil_Usuario extends ToolBarActivity {
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+                String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+                if (!imagen_perfil.isEmpty()) {
                     Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
+                } else {
+                    Glide.with(activity.getApplicationContext()).load(R.drawable.placeholder).into(view);
                 }
             }
 
@@ -196,6 +199,27 @@ public class Perfil_Usuario extends ToolBarActivity {
             }
         });
 
+    }
+
+    public static void getUserImageInto(ImageView view, Context context) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        DatabaseReference Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
+        Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+                if (!imagen_perfil.isEmpty()) {
+                    Glide.with(context).load(imagen_perfil).into(view);
+                } else {
+                    Glide.with(context).load(R.drawable.placeholder).into(view);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
     }
 

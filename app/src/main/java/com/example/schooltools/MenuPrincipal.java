@@ -82,8 +82,6 @@ public class MenuPrincipal extends ToolBarActivity {
 
         setFragmentListarTareas();
 
-        initializeDrawer();
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.tasks);
@@ -123,6 +121,8 @@ public class MenuPrincipal extends ToolBarActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+
+        initializeDrawer();
 
         CardView profileCard = findViewById(R.id.profile_card);
 
@@ -214,7 +214,7 @@ public class MenuPrincipal extends ToolBarActivity {
         drawerItems.add(new DrawerItemViewModel(R.drawable.alert, "Tareas importantes"));
         drawerItems.add(new DrawerItemViewModel(R.drawable.logout, "Salir"));
 
-        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]));
+        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_row_item, drawerItems.toArray(new DrawerItemViewModel[3]), user);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -240,7 +240,7 @@ public class MenuPrincipal extends ToolBarActivity {
         mDrawerToggle.syncState();
     }
 
-    private void VerificarCuentaCorreo() {
+    public void VerificarCuentaCorreo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("verificar cuenta")
                 .setMessage("¿Estás seguro(a) de enviar instrucciones de verificación a su correo electrónico? "
@@ -294,7 +294,7 @@ public class MenuPrincipal extends ToolBarActivity {
         }
     }
 
-    private void AnimacionCuentaVerificada() {
+    public void AnimacionCuentaVerificada() {
         Button EntendidoVerificado;
 
         dialog_cuenta_verificada.setContentView(R.layout.dialogo_cuenta_verificada);
@@ -364,6 +364,8 @@ public class MenuPrincipal extends ToolBarActivity {
 
                     NombresPrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
+                    ((TextView) findViewById(R.id.nombre_drawer)).setText(nombres);
+                    ((TextView) findViewById(R.id.mail_drawer)).setText(correo);
                 }
             }
 

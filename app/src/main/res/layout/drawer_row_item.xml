@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/activatedBackgroundIndicator"
+    android:background="#E1F4F7"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:padding="10dp" >
+    android:padding="0dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_pic_card"
+        android:layout_width="115dp"
+        android:layout_height="145dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp">
+        <!--Imagen de perfil-->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_pic_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="false"
+            android:scaleType="matrix"
+            android:layout_gravity="center"
+            android:width="115dp"
+            android:height="145dp"
+            android:foreground="@drawable/profile_photo_border"
+            android:src="@drawable/placeholder" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/nombre_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_pic_card"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:elevation="10dp"
+        android:text="Mi perfil" />
+
+    <TextView
+        android:id="@+id/mail_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nombre_drawer"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:elevation="10dp"
+        android:text="Mi perfil" />
+
 
     <ImageView
         android:id="@+id/imageViewIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:paddingRight="10dp" />
@@ -20,11 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imageViewIcon"
-        android:paddingRight="10dp"
-        android:text="Item Name"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        />
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -22,7 +22,7 @@ public class Pantalla_De_Carga extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        int Tiempo = 3000;
+        int Tiempo = 4000;
 
         new Handler().postDelayed(new Runnable() {
             @Override

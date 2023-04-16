@@ -240,8 +240,8 @@
     <string name="Btn_Actualizar_C_A">Actualizar</string>
 
     <!--INFORMACIÓN DE APLICACIÓN-->
-    <string name="Desarrollador">Desarrollado por: Carlos Ros</string>
-    <string name="CorreoSoporte">Soporte: CarlosRos@gmail.com</string>
+    <string name="Desarrollador">Desarrollado por: Arturo Espinosa</string>
+    <string name="CorreoSoporte"></string>
     <string name="Version">Versión: 1.0</string>
     <string name="EntendidoInfo">Entendido</string>
 
