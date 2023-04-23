@@ -39,7 +39,7 @@
                     android:adjustViewBounds="false"
                     android:scaleType="matrix"
                     android:foreground="@drawable/profile_photo_border"
-                    android:background="@drawable/placeholder" />
+                    />
 
             </androidx.cardview.widget.CardView>
 

@@ -173,8 +173,10 @@ public class Perfil_Usuario extends ToolBarActivity {
         if (!imagen_perfil.isEmpty()){
             Glide.with(getApplicationContext()).load(imagen_perfil).placeholder(R.drawable.placeholder).into(Imagen_Perfil);
             Imagen_Perfil.setBackground(getDrawable(R.drawable.insets));
+            Imagen_Perfil.setScaleType(ImageView.ScaleType.MATRIX);
         } else {
             Glide.with(getApplicationContext()).load(R.drawable.placeholder).into(Imagen_Perfil);
+            Imagen_Perfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
 
         Editar_imagen.setElevation(11);
@@ -190,8 +192,10 @@ public class Perfil_Usuario extends ToolBarActivity {
                 String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
                 if (!imagen_perfil.isEmpty()) {
                     Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
+                    view.setScaleType(ImageView.ScaleType.MATRIX);
                 } else {
                     Glide.with(activity.getApplicationContext()).load(R.drawable.placeholder).into(view);
+                    view.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
 
@@ -212,8 +216,10 @@ public class Perfil_Usuario extends ToolBarActivity {
                 String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
                 if (!imagen_perfil.isEmpty()) {
                     Glide.with(context).load(imagen_perfil).into(view);
+                    view.setScaleType(ImageView.ScaleType.MATRIX);
                 } else {
                     Glide.with(context).load(R.drawable.placeholder).into(view);
+                    view.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
 
