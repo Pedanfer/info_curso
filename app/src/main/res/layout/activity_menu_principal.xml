@@ -57,7 +57,6 @@
                             android:layout_height="85dp"
                             android:adjustViewBounds="false"
                             android:scaleType="matrix"
-                            android:background="@drawable/insets"
                             android:foreground="@drawable/profile_photo_border" />
                     </androidx.cardview.widget.CardView>
 

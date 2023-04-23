@@ -26,8 +26,7 @@
             android:layout_gravity="center"
             android:width="115dp"
             android:height="145dp"
-            android:foreground="@drawable/profile_photo_border"
-            android:src="@drawable/placeholder" />
+            android:foreground="@drawable/profile_photo_border" />
     </androidx.cardview.widget.CardView>
 
     <TextView
