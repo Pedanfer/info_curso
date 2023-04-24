@@ -72,7 +72,7 @@ public class Definir_Asignaturas extends ToolBarActivity {
 
         addSubject.setOnClickListener(view -> Agregar_Asignatura());
         saveChanges.setOnClickListener(view -> {
-            SharedPreferences.Editor prefsEditor = getSharedPreferences("prefs", Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor prefsEditor = getSharedPreferences(FirebaseAuth.getInstance().getUid(), Context.MODE_PRIVATE).edit();
             prefsEditor.putBoolean("subjectsAsigned", true);
             prefsEditor.commit();
             finish();

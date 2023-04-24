@@ -234,7 +234,8 @@ public class Actualizar_Tarea extends ToolBarActivity implements AdapterView.OnI
 
                 ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, subjects);
                 spinnerSubjects.setAdapter(adapter);
-                spinnerSubjects.setSelection(subjects.indexOf(getIntent().getStringExtra("asignatura")));
+                spinnerSubjects.setSelection(subjects.indexOf(asignatura_R));
+                adapter.notifyDataSetChanged();
             }
 
             @Override

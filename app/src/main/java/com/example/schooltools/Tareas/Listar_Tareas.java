@@ -113,7 +113,7 @@ public class Listar_Tareas extends Fragment {
         filter.setOnClickListener(v -> FiltrarTareas());
         removeTask.setOnClickListener(v -> Vaciar_Registro_De_tareas());
         addTask.setOnClickListener(view1 -> {
-            SharedPreferences prefs = getActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+            SharedPreferences prefs = getActivity().getSharedPreferences(FirebaseAuth.getInstance().getUid(), MODE_PRIVATE);
             if (!prefs.getBoolean("subjectsAsigned", false))
                 startActivity(new Intent(getActivity(), Definir_Asignaturas.class));
             else
@@ -202,6 +202,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Declarar las vistas
                         Button CD_Eliminar, CD_Actualizar;
@@ -235,6 +236,7 @@ public class Listar_Tareas extends Fragment {
                                 intent.putExtra("descripcion", descripcion);
                                 intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
+                                intent.putExtra("asignatura", asignatura);
                                 startActivity(intent);
                                 dialog.dismiss();
 
@@ -332,6 +334,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Declarar las vistas
                         Button CD_Eliminar, CD_Actualizar;
@@ -365,6 +368,7 @@ public class Listar_Tareas extends Fragment {
                                 intent.putExtra("descripcion", descripcion);
                                 intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
+                                intent.putExtra("asignatura", asignatura);
                                 startActivity(intent);
                                 dialog.dismiss();
 
@@ -462,6 +466,7 @@ public class Listar_Tareas extends Fragment {
                         String descripcion = getItem(position).getDescripcion();
                         String fecha_tarea = getItem(position).getFecha_tarea();
                         String estado = getItem(position).getEstado();
+                        String asignatura = getItem(position).getAsignatura();
 
                         //Declarar las vistas
                         Button CD_Eliminar, CD_Actualizar;
@@ -495,6 +500,7 @@ public class Listar_Tareas extends Fragment {
                                 intent.putExtra("descripcion", descripcion);
                                 intent.putExtra("fecha_tarea", fecha_tarea);
                                 intent.putExtra("estado", estado);
+                                intent.putExtra("asignatura", asignatura);
                                 startActivity(intent);
                                 dialog.dismiss();
 

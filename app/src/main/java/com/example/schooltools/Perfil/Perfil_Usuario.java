@@ -1,8 +1,5 @@
 package com.example.schooltools.Perfil;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -20,7 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+
 import com.bumptech.glide.Glide;
+import com.example.schooltools.ActualizarPass.ActualizarPassUsuario;
+import com.example.schooltools.MenuPrincipal;
+import com.example.schooltools.R;
+import com.example.schooltools.ToolBarActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,10 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
-import com.example.schooltools.ActualizarPass.ActualizarPassUsuario;
-import com.example.schooltools.MenuPrincipal;
-import com.example.schooltools.R;
-import com.example.schooltools.ToolBarActivity;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -168,9 +168,9 @@ public class Perfil_Usuario extends ToolBarActivity {
         });
     }
 
-    private void Cargar_Imagen(String imagen_perfil)  {
+    private void Cargar_Imagen(String imagen_perfil) {
         /*Cuando la imagen ha sido traida exitosamente desde Firebase*/
-        if (!imagen_perfil.isEmpty()){
+        if (!imagen_perfil.isEmpty()) {
             Glide.with(getApplicationContext()).load(imagen_perfil).into(Imagen_Perfil);
             Imagen_Perfil.setScaleType(ImageView.ScaleType.MATRIX);
         } else {
@@ -185,23 +185,24 @@ public class Perfil_Usuario extends ToolBarActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         DatabaseReference Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
-        Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
-                if (!imagen_perfil.isEmpty()) {
-                    Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
-                    view.setScaleType(ImageView.ScaleType.MATRIX);
-                } else {
-                    Glide.with(activity.getApplicationContext()).load(R.drawable.placeholder).into(view);
-                    view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        if (user != null)
+            Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+                    if (!imagen_perfil.isEmpty()) {
+                        Glide.with(activity.getApplicationContext()).load(imagen_perfil).into(view);
+                        view.setScaleType(ImageView.ScaleType.MATRIX);
+                    } else {
+                        Glide.with(activity.getApplicationContext()).load(R.drawable.placeholder).into(view);
+                        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
     }
 
@@ -209,23 +210,24 @@ public class Perfil_Usuario extends ToolBarActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         DatabaseReference Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
-        Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
-                if (!imagen_perfil.isEmpty()) {
-                    Glide.with(context).load(imagen_perfil).into(view);
-                    view.setScaleType(ImageView.ScaleType.MATRIX);
-                } else {
-                    Glide.with(context).load(R.drawable.placeholder).into(view);
-                    view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        if (user != null)
+            Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String imagen_perfil = "" + snapshot.child("imagen_perfil").getValue();
+                    if (!imagen_perfil.isEmpty()) {
+                        Glide.with(context).load(imagen_perfil).into(view);
+                        view.setScaleType(ImageView.ScaleType.MATRIX);
+                    } else {
+                        Glide.with(context).load(R.drawable.placeholder).into(view);
+                        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
     }
 
